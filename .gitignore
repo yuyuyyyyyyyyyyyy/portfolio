@@ -1,0 +1,9 @@
+node_modules/
+dist/
+deploy-dist/
+dist-gh/
+release-static/
+.openai/
+video-previews/
+.DS_Store
+*.log
