@@ -89,6 +89,8 @@ const projects = [
   }
 ]
 
+const asset = (p) => import.meta.env.BASE_URL + p
+
 const process = [
   ['01', '发现真实问题', 'AI Job Radar：求职者缺的不是另一个岗位库，而是浏览岗位时的即时判断。'],
   ['02', '缩小产品范围', '删除岗位采集、独立搜索和复杂成功率预测，先验证是否值得沟通。'],
@@ -111,9 +113,9 @@ const process = [
           <h1>把复杂判断，<br><em>变成下一步行动。</em></h1>
           <p class="lead"><b>杜雨菲｜AI 产品经理 / 产品助理</b><br>计算机科学与技术本科，独立完成过浏览器扩展、AI 应用和微信小程序。<br>我从真实使用场景中识别关键阻碍，在用户价值、技术限制和投入成本之间做取舍，并将方案推进到可运行、可验证的版本。</p>
           <dl class="quick-facts"><div><dt>求职方向</dt><dd>AI 产品经理 / 产品助理</dd></div><div><dt>项目实践</dt><dd>浏览器扩展、AI 应用、微信小程序</dd></div><div><dt>可承担工作</dt><dd>需求拆解、流程与交互、AI 输出设计、原型验证、版本复盘</dd></div><div><dt>状态</dt><dd>可尽快到岗</dd></div></dl>
-          <div class="actions"><a class="button primary" href="#work">查看代表项目</a><a class="button" href="杜雨菲_AI产品助理_简历.pdf" download>下载简历</a><a class="button text-button" href="mailto:duyufei000@126.com">联系我</a></div>
+          <div class="actions"><a class="button primary" href="#work">查看代表项目</a><a class="button" :href="asset('杜雨菲_AI产品助理_简历.pdf')" download>下载简历</a><a class="button text-button" href="mailto:duyufei000@126.com">联系我</a></div>
         </div>
-        <aside class="hero-product"><img src="media/ai-job-plugin-poster.jpg" alt="AI Job Radar 在招聘网页中的真实分析界面"><div class="hero-decision"><span>岗位判断</span><b>优先沟通</b><p>硬门槛：满足本科要求<br>简历证据：独立上线 AI 产品<br>下一步：生成可编辑招呼语</p></div></aside>
+        <aside class="hero-product"><img :src="asset('media/ai-job-plugin-poster.jpg')" alt="AI Job Radar 在招聘网页中的真实分析界面"><div class="hero-decision"><span>岗位判断</span><b>优先沟通</b><p>硬门槛：满足本科要求<br>简历证据：独立上线 AI 产品<br>下一步：生成可编辑招呼语</p></div></aside>
       </section>
 
       <section id="work" class="section shell work-home">
@@ -137,9 +139,9 @@ const process = [
           </div>
 
           <div class="card-media mechanism-media" :id="`demo-${project.id}`">
-            <template v-if="project.id === 'plugin'"><div class="video-head"><div><span>真实产品界面</span><b>从完整 JD 生成行动判断</b></div><small>{{ project.status }}</small></div><video :src="project.video" :poster="project.poster" controls preload="metadata" playsinline :aria-label="`${project.title} 演示视频`"></video></template>
+            <template v-if="project.id === 'plugin'"><div class="video-head"><div><span>真实产品界面</span><b>从完整 JD 生成行动判断</b></div><small>{{ project.status }}</small></div><video :src="asset(project.video)" :poster="asset(project.poster)" controls preload="metadata" playsinline :aria-label="`${project.title} 演示视频`"></video></template>
             <div v-else-if="project.id === 'prism'" class="prism-mechanism"><span class="mechanism-label">输入事件</span><h4>“他没有回复我。”</h4><div class="mechanism-tabs"><button :class="{active: prismView === 'fact'}" @click="prismView = 'fact'">事实</button><button :class="{active: prismView === 'possibility'}" @click="prismView = 'possibility'">不同解释</button><button :class="{active: prismView === 'verify'}" @click="prismView = 'verify'">下一步验证</button></div><p v-if="prismView === 'fact'"><b>可以确认：</b>消息已发出，目前没有收到回复。</p><p v-else-if="prismView === 'possibility'"><b>还有可能：</b>正在忙、没有看到、不知道如何回应，或暂时不想回复。</p><p v-else><b>可以验证：</b>等待一个合理时间，再通过其他行为观察关系，而不是立即认定原因。</p></div>
-            <div v-else class="ops-mechanism"><span class="mechanism-label">第 03 章 · 流量波动</span><h4>热点突然出现，你会怎么选？</h4><div class="ops-stats"><p><b>关注度</b><i>{{ opsChoice === 'trend' ? '+24' : '+8' }}</i></p><p><b>信任度</b><i>{{ opsChoice === 'trend' ? '-6' : '+12' }}</i></p><p><b>平台风险</b><i>{{ opsChoice === 'trend' ? '上升' : '稳定' }}</i></p></div><div class="ops-actions"><button :class="{active: opsChoice === 'trend'}" @click="opsChoice = 'trend'">立即追热点</button><button :class="{active: opsChoice === 'steady'}" @click="opsChoice = 'steady'">坚持垂直内容</button></div><div id="ops-qr" class="qr-entry"><img :src="project.qr" alt="探索运营微信小程序码"><div><b>微信扫码体验</b><p>小程序目前在线。</p></div></div></div>
+            <div v-else class="ops-mechanism"><span class="mechanism-label">第 03 章 · 流量波动</span><h4>热点突然出现，你会怎么选？</h4><div class="ops-stats"><p><b>关注度</b><i>{{ opsChoice === 'trend' ? '+24' : '+8' }}</i></p><p><b>信任度</b><i>{{ opsChoice === 'trend' ? '-6' : '+12' }}</i></p><p><b>平台风险</b><i>{{ opsChoice === 'trend' ? '上升' : '稳定' }}</i></p></div><div class="ops-actions"><button :class="{active: opsChoice === 'trend'}" @click="opsChoice = 'trend'">立即追热点</button><button :class="{active: opsChoice === 'steady'}" @click="opsChoice = 'steady'">坚持垂直内容</button></div><div id="ops-qr" class="qr-entry"><img :src="asset(project.qr)" alt="探索运营微信小程序码"><div><b>微信扫码体验</b><p>小程序目前在线。</p></div></div></div>
           </div>
 
           <section v-if="openProject === project.id" :id="`detail-${project.id}`" class="case-detail">
@@ -154,7 +156,7 @@ const process = [
 
       <section id="education" class="shell education-compact"><p class="kicker">我能承担的产品工作</p><div class="education-three"><article><span>教育背景</span><h3>计算机科学与技术本科</h3><p>长江师范学院｜山东科技大学联合培养</p><p>专业排名第 4｜优秀奖学金｜CET-4</p></article><article><span>产品工作</span><p>问题拆解、用户流程、原型与交互、AI 输出规则、需求优先级、版本复盘</p></article><article><span>技术理解</span><p>Vue、Next.js、TypeScript、Node.js、浏览器扩展、微信小程序、大模型接口与 Git</p><p>能独立制作验证版本，并结合实现限制调整产品方案。</p></article></div></section>
 
-      <section class="contact shell"><p class="kicker">联系方式</p><h2>正在寻找 AI 产品经理<br>或产品助理岗位。</h2><div><a class="button lime" href="mailto:duyufei000@126.com">duyufei000@126.com</a><button class="copy-email" type="button" @click="copyEmail">{{ copied ? '邮箱已复制' : '复制邮箱' }}</button><a href="杜雨菲_AI产品助理_简历.pdf" download>下载简历</a><a href="https://github.com/yuyuyyyyyyyyyyyy" target="_blank" rel="noreferrer">GitHub</a></div></section>
+      <section class="contact shell"><p class="kicker">联系方式</p><h2>正在寻找 AI 产品经理<br>或产品助理岗位。</h2><div><a class="button lime" href="mailto:duyufei000@126.com">duyufei000@126.com</a><button class="copy-email" type="button" @click="copyEmail">{{ copied ? '邮箱已复制' : '复制邮箱' }}</button><a :href="asset('杜雨菲_AI产品助理_简历.pdf')" download>下载简历</a><a href="https://github.com/yuyuyyyyyyyyyyyy" target="_blank" rel="noreferrer">GitHub</a></div></section>
     </main>
     <footer class="footer shell"><span>© 2026 杜雨菲</span><span>AI 产品经理 / 产品助理作品集</span></footer>
   </div>
