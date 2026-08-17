@@ -65,7 +65,28 @@ const projects = [
     ]
   },
   {
-    no: '03', id: 'ops', supporting: true,
+    no: '03', id: 'mudanting',
+    title: '牡丹亭｜由文字重新展开的互动阅读',
+    status: '已上线 · 可在线体验',
+    intro: '围绕《牡丹亭·惊梦·皂罗袍》制作互动阅读场景，让“原来—姹紫嫣红—似这般—断井颓垣”不只被解释，也通过层层展开的交互、节奏与视觉被感受。',
+    iteration: '没有把它做成古诗词百科或一次性展示页，而是缩小到一句文本：先保留原文的阅读节奏，再让词义、画面与情绪逐层出现，验证数字媒介能否帮助人重新进入经典文本。',
+    evidence: { task: '让不熟悉昆曲的读者，也能从一句原文进入《牡丹亭》的情绪与意象。', assumption: '增加释义和视觉效果，就能降低经典文本的理解门槛。', tradeoff: '不堆叠背景知识和功能；围绕一句“皂罗袍”设计分层阅读，把解释放在交互之后，并保留返回原文的路径。', validation: '完整互动流程已实现并公开上线，可在线体验；目前验证的是表达与交互闭环，尚无规模化用户数据。' },
+    tags: ['互动叙事', '创意开发', '个人独立项目', '可在线体验'],
+    poster: 'media/mudanting-youyuan.png',
+    primaryLabel: '查看创作复盘', secondaryLabel: '在线体验', secondaryHref: 'https://yuyuyyyyyyyyyyyy.github.io/mudanting-jingmeng/', external: true,
+    detail: [
+      ['01 项目概览', '一个围绕《牡丹亭》第十出“惊梦”中《皂罗袍》一句展开的互动阅读实验。它尝试让文字从书页中缓慢浮起，成为可以被观看、触碰和理解的阅读过程。'],
+      ['02 我想解决的问题', '经典文本常被压缩为注释、译文和知识点；读者可能理解了字面，却没有进入句子的节奏、转折和情绪。'],
+      ['03 最初假设', '只要加入足够丰富的释义、画面和动效，就能让文本更容易理解。'],
+      ['04 方案为什么收缩', '信息越多不一定越接近文本。因此项目最终只围绕一句“原来姹紫嫣红开遍，似这般都付与断井颓垣”组织体验。'],
+      ['05 关键设计取舍', '先显示原文，再以“原来”和“姹紫嫣红”为交互入口；释义、情绪和游园画卷逐层出现；读者可以略过展开，也可以合上释义回到原文。'],
+      ['06 实际完成的内容', '已完成折叠书页、原文层、词义层、情绪层、游园画卷及完整状态切换，并为键盘操作和可访问标签保留入口。'],
+      ['07 当前验证边界', '项目已公开上线并可完成完整流程，但它仍是个人创作实验；没有用户规模、学习效果或商业结果数据。'],
+      ['08 技术与创作方式', '使用 React、TypeScript 与 CSS 动效实现。AI帮助跨越视觉、交互和代码实现边界，具体阅读结构、内容取舍和迭代判断由我完成。']
+    ]
+  },
+  {
+    no: '04', id: 'ops', supporting: true,
     title: '探索运营｜内容平台运营策略推演小程序',
     status: '微信小程序已上线',
     intro: '将平台限流、热点变化、公众情绪、内容管控和商业化压力等抽象机制，转化为可以体验和决策的章节式微信小程序。',
@@ -94,8 +115,8 @@ const asset = (p) => import.meta.env.BASE_URL + p
 const process = [
   ['01', '发现真实问题', 'AI Job Radar：求职者缺的不是另一个岗位库，而是浏览岗位时的即时判断。'],
   ['02', '缩小产品范围', '删除岗位采集、独立搜索和复杂成功率预测，先验证是否值得沟通。'],
-  ['03', '做出可运行版本', '将三个想法分别落地为浏览器扩展、AI 应用和微信小程序，而不是只停留在原型图。'],
-  ['04', '根据使用问题迭代', '根据真实体验，重构 Radar 的产品形态，修改探索运营的新手引导。']
+  ['03', '做出可运行版本', '把浏览器扩展、AI 应用、互动阅读和微信小程序真正做出来，而不是只停留在原型图。'],
+  ['04', '根据限制继续重构', '根据真实体验重构 Radar，根据用户反馈修改探索运营，也在《牡丹亭》中收缩信息、保留阅读节奏。']
 ]
 </script>
 
@@ -111,8 +132,8 @@ const process = [
         <div class="hero-copy">
           <p class="eyebrow"><i></i>正在求职 · 可尽快到岗</p>
           <h1>把复杂判断，<br><em>变成下一步行动。</em></h1>
-          <p class="lead"><b>杜雨菲｜AI 产品经理 / 产品助理</b><br>计算机科学与技术本科，独立完成过浏览器扩展、AI 应用和微信小程序。<br>我从真实使用场景中识别关键阻碍，在用户价值、技术限制和投入成本之间做取舍，并将方案推进到可运行、可验证的版本。</p>
-          <dl class="quick-facts"><div><dt>求职方向</dt><dd>AI 产品经理 / 产品助理</dd></div><div><dt>项目实践</dt><dd>浏览器扩展、AI 应用、微信小程序</dd></div><div><dt>可承担工作</dt><dd>需求拆解、流程与交互、AI 输出设计、原型验证、版本复盘</dd></div><div><dt>状态</dt><dd>可尽快到岗</dd></div></dl>
+          <p class="lead"><b>杜雨菲｜AI 产品经理 / 产品助理</b><br>计算机科学与技术本科，独立完成过浏览器扩展、AI 应用、互动阅读和微信小程序。<br>我从真实问题出发，借助 AI 跨越产品、交互和代码，把模糊想法推进到可运行版本，再根据失败、反馈与新的理解继续重构。</p>
+          <dl class="quick-facts"><div><dt>求职方向</dt><dd>AI 产品经理 / 产品助理</dd></div><div><dt>项目实践</dt><dd>AI 应用、互动叙事、浏览器扩展</dd></div><div><dt>可承担工作</dt><dd>需求拆解、流程与交互、AI 输出设计、原型验证、版本复盘</dd></div><div><dt>状态</dt><dd>可尽快到岗</dd></div></dl>
           <div class="actions"><a class="button primary" href="#work">查看代表项目</a><a class="button" :href="asset('杜雨菲_AI产品助理_简历.pdf')" download>下载简历</a><a class="button text-button" href="mailto:duyufei000@126.com">联系我</a></div>
         </div>
         <aside class="hero-product"><img :src="asset('media/ai-job-plugin-poster.jpg')" alt="AI Job Radar 在招聘网页中的真实分析界面"><div class="hero-decision"><span>岗位判断</span><b>优先沟通</b><p>硬门槛：满足本科要求<br>简历证据：独立上线 AI 产品<br>下一步：生成可编辑招呼语</p></div></aside>
@@ -141,13 +162,14 @@ const process = [
           <div class="card-media mechanism-media" :id="`demo-${project.id}`">
             <template v-if="project.id === 'plugin'"><div class="video-head"><div><span>真实产品界面</span><b>从完整 JD 生成行动判断</b></div><small>{{ project.status }}</small></div><video :src="asset(project.video)" :poster="asset(project.poster)" controls preload="metadata" playsinline :aria-label="`${project.title} 演示视频`"></video></template>
             <div v-else-if="project.id === 'prism'" class="prism-mechanism"><span class="mechanism-label">输入事件</span><h4>“他没有回复我。”</h4><div class="mechanism-tabs"><button :class="{active: prismView === 'fact'}" @click="prismView = 'fact'">事实</button><button :class="{active: prismView === 'possibility'}" @click="prismView = 'possibility'">不同解释</button><button :class="{active: prismView === 'verify'}" @click="prismView = 'verify'">下一步验证</button></div><p v-if="prismView === 'fact'"><b>可以确认：</b>消息已发出，目前没有收到回复。</p><p v-else-if="prismView === 'possibility'"><b>还有可能：</b>正在忙、没有看到、不知道如何回应，或暂时不想回复。</p><p v-else><b>可以验证：</b>等待一个合理时间，再通过其他行为观察关系，而不是立即认定原因。</p></div>
+            <a v-else-if="project.id === 'mudanting'" class="mudanting-mechanism" :href="project.secondaryHref" target="_blank" rel="noreferrer"><img :src="asset(project.poster)" alt="《牡丹亭·惊梦》互动阅读中的游园画卷"><div><span class="mechanism-label">皂罗袍 · 互动阅读</span><h4>原来姹紫嫣红开遍，<br>似这般都付与断井颓垣。</h4><p>点击进入一场由文字重新展开的阅读</p></div></a>
             <div v-else class="ops-mechanism"><span class="mechanism-label">第 03 章 · 流量波动</span><h4>热点突然出现，你会怎么选？</h4><div class="ops-stats"><p><b>关注度</b><i>{{ opsChoice === 'trend' ? '+24' : '+8' }}</i></p><p><b>信任度</b><i>{{ opsChoice === 'trend' ? '-6' : '+12' }}</i></p><p><b>平台风险</b><i>{{ opsChoice === 'trend' ? '上升' : '稳定' }}</i></p></div><div class="ops-actions"><button :class="{active: opsChoice === 'trend'}" @click="opsChoice = 'trend'">立即追热点</button><button :class="{active: opsChoice === 'steady'}" @click="opsChoice = 'steady'">坚持垂直内容</button></div><div id="ops-qr" class="qr-entry"><img :src="asset(project.qr)" alt="探索运营微信小程序码"><div><b>微信扫码体验</b><p>小程序目前在线。</p></div></div></div>
           </div>
 
           <section v-if="openProject === project.id" :id="`detail-${project.id}`" class="case-detail">
             <header><p class="kicker">项目详情</p><h3 class="project-name">{{ project.title.split('｜')[0] }}</h3><p class="project-subtitle">{{ project.title.split('｜')[1] }}</p></header>
             <div class="detail-grid"><details v-for="(section, index) in project.detail" :key="section[0]" :open="index === 0"><summary><span>{{ section[0] }}</span><i>展开</i></summary><p>{{ section[1] }}</p></details></div>
-            <div class="detail-links"><a v-if="project.id === 'plugin'" class="button primary" href="https://microsoftedge.microsoft.com/addons/detail/aidmlojjjgebhogkffbebnfpjhfbpfmm" target="_blank" rel="noreferrer">在 Edge 商店查看</a><a v-if="project.id === 'prism'" class="button primary" href="https://deluxe-cheesecake-203e56.netlify.app/" target="_blank" rel="noreferrer">在线体验多棱镜</a><a v-if="project.id === 'ops'" class="button primary" href="#ops-qr">扫描小程序码体验</a><a class="button" :href="`#demo-${project.id}`">观看演示</a></div>
+            <div class="detail-links"><a v-if="project.id === 'plugin'" class="button primary" href="https://microsoftedge.microsoft.com/addons/detail/aidmlojjjgebhogkffbebnfpjhfbpfmm" target="_blank" rel="noreferrer">在 Edge 商店查看</a><a v-if="project.id === 'prism'" class="button primary" href="https://deluxe-cheesecake-203e56.netlify.app/" target="_blank" rel="noreferrer">在线体验多棱镜</a><a v-if="project.id === 'mudanting'" class="button primary" href="https://yuyuyyyyyyyyyyyy.github.io/mudanting-jingmeng/" target="_blank" rel="noreferrer">在线体验《牡丹亭》</a><a v-if="project.id === 'ops'" class="button primary" href="#ops-qr">扫描小程序码体验</a><a class="button" :href="`#demo-${project.id}`">查看项目画面</a></div>
           </section>
         </article>
       </section>
