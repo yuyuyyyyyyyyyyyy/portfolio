@@ -37,16 +37,14 @@
 /* v31: product-manager evidence without changing visual system */
 .quick-facts{grid-template-columns:.85fr .9fr 1.7fr .55fr}.pm-evidence{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;margin-top:18px;border:1px solid var(--line);background:var(--line)}.pm-evidence>div{padding:15px 16px;background:var(--paper)}.pm-evidence b{color:var(--green);font-size:9px;letter-spacing:.05em}.pm-evidence p{margin:7px 0 0;color:var(--muted);font-size:11px;line-height:1.62}.home-project.featured .pm-evidence{border-color:#b9c4bd}.home-project.featured .pm-evidence>div{background:#f2f3ee}.decision-proof{display:block;padding:14px 17px;border-top:1px solid var(--line);background:#f7f5ef;color:var(--ink);font-size:11px;line-height:1.7}.education-three{display:grid;grid-template-columns:.8fr 1fr 1.2fr;gap:1px;margin-top:22px;border:1px solid var(--line);background:var(--line)}.education-three article{min-height:190px;padding:25px 27px;background:#ecece6}.education-three span{color:var(--green);font-size:10px;font-weight:900}.education-three h3{margin:28px 0 12px;font-size:19px}.education-three p{margin:10px 0;color:var(--muted);font-size:12px;line-height:1.72}.process-grid article{min-height:250px}.process-grid h3{margin-top:52px}.process-grid p{font-size:11px;line-height:1.72}@media(max-width:1050px){.quick-facts{grid-template-columns:repeat(2,1fr)}.education-three{grid-template-columns:1fr}.education-three article{min-height:0}}@media(max-width:600px){.quick-facts,.pm-evidence{grid-template-columns:1fr}.process-grid article{min-height:185px}.process-grid h3{margin-top:38px}}
 
-/* v33: local job-search Agent — a self-used tool, not a public product */
-.lab-section{padding-top:96px;border-top:1px solid var(--line)}
-.lab-section .card-tags{display:flex}
-.lab-section .home-project{border-top:5px solid var(--green);padding:50px 0 0}
-.lab-section .card-media{background:var(--green)}
-.lab-section .card-media .agent-log{margin:0;padding:20px;max-height:430px;overflow:auto;background:var(--green2);color:#dbe8e0;font:11px/1.95 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap;word-break:break-word;border-bottom:1px solid #ffffff1f}
-.lab-section .card-media .agent-log b{color:var(--lime);font-weight:800}
-.lab-section .card-media .agent-note{margin:0;padding:12px 16px;background:var(--green);color:#a7bcb2;font-size:10px;line-height:1.7}
-@media(max-width:1050px){.lab-section .card-media{width:min(720px,100%)}}
-@media(max-width:600px){.lab-section{padding-top:76px}.lab-section .home-project{padding-top:34px}.lab-section .card-media .agent-log{font-size:10px;line-height:1.8;padding:14px;max-height:none}}
+/* v33: local job-search Agent — the first case study, an honestly-labelled self-used tool */
+.agent-card .card-tags{display:flex}
+.agent-card .card-media{background:var(--green)}
+.agent-card .card-media .agent-log{margin:0;padding:22px 20px;max-height:470px;overflow:auto;background:var(--green2);color:#dbe8e0;font:11px/2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap;word-break:break-word;border-bottom:1px solid #ffffff1f}
+.agent-card .card-media .agent-log b{color:var(--lime);font-weight:800}
+.agent-card .card-media .agent-note{margin:0;padding:12px 16px;background:var(--green);color:#a7bcb2;font-size:10px;line-height:1.7}
+@media(max-width:1050px){.agent-card .card-media{width:min(760px,100%)}}
+@media(max-width:600px){.agent-card .card-media .agent-log{font-size:10px;line-height:1.8;padding:14px;max-height:none}}
 
 /* v32: Mudanting interactive-reading project */
 .mudanting-mechanism{position:relative;display:block;min-height:360px;overflow:hidden;color:white;text-decoration:none;background:#172b25}.mudanting-mechanism img{display:block;width:100%;height:360px;object-fit:cover;filter:saturate(.82) contrast(1.05);transition:transform .6s ease}.mudanting-mechanism::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 18%,rgba(14,30,25,.88) 100%)}.mudanting-mechanism>div{position:absolute;z-index:1;left:28px;right:28px;bottom:28px}.mudanting-mechanism .mechanism-label{color:#d6e8c2}.mudanting-mechanism h4{margin:12px 0 8px;font-family:serif;font-size:clamp(22px,2.5vw,34px);font-weight:500;line-height:1.45;letter-spacing:.05em}.mudanting-mechanism p{margin:0;color:#e4e8e2;font-size:11px}.mudanting-mechanism:hover img{transform:scale(1.035)}@media(max-width:600px){.mudanting-mechanism,.mudanting-mechanism img{min-height:300px;height:300px}.mudanting-mechanism>div{left:20px;right:20px;bottom:20px}}
