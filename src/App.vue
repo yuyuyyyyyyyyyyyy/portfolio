@@ -21,6 +21,7 @@ const projects = [
   {
     no: '02', id: 'plugin', featured: true, flip: true,
     stack: '浏览器扩展 · 内容脚本 · 大模型 API',
+    outcome: '已通过 Microsoft Edge 商店审核并公开上架；未做推广，因此不写用户量与效率提升。',
     title: 'AI Job Radar｜招聘网页内的岗位决策助手',
     status: '已上架 Edge 商店',
     intro: '帮助求职者在浏览招聘岗位时，快速判断硬门槛、职责匹配和是否值得沟通，并根据简历证据生成招呼语。',
@@ -45,6 +46,7 @@ const projects = [
   {
     no: '03', id: 'prism',
     stack: 'Next.js · TypeScript · 结构化输出约束',
+    outcome: '已上线，可在线完成一次从事件描述到结构化输出的完整流程。',
     title: '多棱镜｜人生事件多角度解释工具',
     status: '已上线 · 可在线体验',
     intro: '针对用户容易陷入单一归因的问题，将一件困扰人的事情拆分为“事实、不同解释、下一步验证”，帮助用户区分已经发生的事实和暂时无法确认的推测。',
@@ -69,6 +71,7 @@ const projects = [
   {
     no: '04', id: 'mudanting', flip: true,
     stack: 'React · TypeScript · 检索式阅读',
+    outcome: '已上线，面向高一学生的古典戏曲互动阅读，可直接在线打开。',
     title: '牡丹亭｜由文字重新展开的互动阅读',
     status: '已上线 · 可在线体验',
     intro: '围绕《牡丹亭·惊梦·皂罗袍》制作互动阅读场景，让“原来—姹紫嫣红—似这般—断井颓垣”不只被解释，也通过层层展开的交互、节奏与视觉被感受。',
@@ -91,6 +94,7 @@ const projects = [
   {
     no: '05', id: 'ops', supporting: true,
     stack: '微信小程序 · 状态模型 · 分支逻辑',
+    outcome: '微信小程序已上线，含 7 条分支可通过小程序码体验完整章节。',
     title: '探索运营｜内容平台运营策略推演小程序',
     status: '微信小程序已上线',
     intro: '将平台限流、热点变化、公众情绪、内容管控和商业化压力等抽象机制，转化为可以体验和决策的章节式微信小程序。',
@@ -134,14 +138,15 @@ const process = [
     <main id="top">
       <section class="hero shell job-hero">
         <div class="hero-copy">
-          <p class="eyebrow"><i></i>正在求职 · 可尽快到岗</p>
-          <h1>把复杂判断，<br><em>变成下一步行动。</em></h1>
-          <p class="lead"><b>杜雨菲｜AI 产品经理 / 产品助理</b><br>计算机科学与技术本科，独立做过浏览器扩展、AI 应用与微信小程序。<br>从真实问题出发，把模糊想法推进到可运行版本，再根据失败与反馈继续重构。</p>
-          <dl class="quick-facts"><div><dt>求职方向</dt><dd>AI 产品经理 / 产品助理</dd></div><div><dt>项目实践</dt><dd>AI 应用、互动叙事、浏览器扩展</dd></div><div><dt>可承担工作</dt><dd>需求拆解、流程与交互、AI 输出设计、原型验证、版本复盘</dd></div><div><dt>期望城市</dt><dd>武汉 / 北京</dd></div></dl>
-          <div class="actions"><a class="button primary" href="#work">查看代表项目</a><a class="button" :href="asset('杜雨菲_AI产品助理_简历.pdf')" download>下载简历</a><a class="button text-button" href="mailto:duyufei000@126.com">联系我</a></div>
+          <p class="eyebrow"><i></i>正在求职 · 武汉 / 北京 · 可尽快到岗</p>
+          <h1>杜雨菲<span class="hero-role">AI 产品经理 / 产品助理</span></h1>
+          <p class="hero-claim">把重复的判断做成能跑起来、<em>出错时能停下来</em>的 AI 工具。</p>
+          <p class="lead">计算机科学与技术本科。独立完成过浏览器扩展、AI 应用与微信小程序：从问题定义、交互到实现上线，都是我自己推进的。</p>
+          <div class="actions"><a class="button primary" href="#work">看代表项目</a><a class="hero-link" :href="asset('杜雨菲_AI产品助理_简历.pdf')" download>下载简历 ↓</a><a class="hero-link" href="mailto:duyufei000@126.com">duyufei000@126.com</a></div>
         </div>
         <aside class="hero-plate"><div class="hero-product"><img :src="asset('media/ai-job-plugin-poster.jpg')" alt="AI Job Radar 在招聘网页中的真实分析界面"><div class="hero-decision"><span>岗位判断</span><b>优先沟通</b><p>硬门槛：满足本科要求<br>简历证据：独立上线 AI 产品<br>下一步：生成可编辑招呼语</p></div></div><small class="hero-caption">AI Job Radar · Edge 商店已上架 · 招聘网页内的真实界面</small></aside>
       </section>
+      <div class="proof-strip shell"><span>Edge 商店已上架</span><span>微信小程序已上线</span><span>互动阅读作品在线</span><span>本地 Agent 自用迭代中</span></div>
 
       <section id="work" class="section shell work-home">
         <header class="section-head"><div><div class="folio"><span>01 / 04</span><span>SELECTED WORK</span></div><p class="kicker">代表项目</p><h2>具体项目，<br>具体判断。</h2></div><p>我不把项目写成功能列表，而是展示：问题如何被发现、方案为什么改变，以及我最终保留和删除了什么。</p></header>
@@ -151,6 +156,7 @@ const process = [
             <div class="card-top"><span>01</span><p><i></i>本地自用 · 仍在迭代 · 代码未公开</p></div>
             <h3 class="project-name">求职 Agent</h3>
             <p class="project-subtitle">从岗位阅读到发送核验的自动化工作流</p>
+            <p class="project-outcome"><b>结果</b>在真实账号上按单轮上限运行，每条记录逐条核验；本地自用，代码未公开。</p>
             <p class="project-intro">把每天重复的岗位阅读、硬门槛判断、招呼语生成和桌面操作串成一条流水线，再用去重、状态记录和发送前校验约束它。目标不是“多发”，而是“错的时候能停下来”。</p>
             <div class="iteration"><b>核心取舍：先有安全边界，再谈效率</b><p>第一版只追求跑通，出现过“发送结果不确定却继续往下发”的情况。后来把两种情况分开：结果未知一律停机并禁止重发，只有确定没发出的局部故障才允许跳过当前岗位；连续失败阈值、否定句识别、发送前身份校验都补了回归测试。</p></div>
             <div class="card-tags"><span>Python</span><span>UI Automation</span><span>SQLite</span><span>大模型 API</span><span>文本控制台</span><span>规则与风控边界</span></div>
@@ -176,6 +182,7 @@ DONE: reviewed=12 verified_sent=3</pre>
           <div class="card-copy">
             <div class="card-top"><span>{{ project.no }}</span><p><i></i>{{ project.status }}</p></div>
             <h3 class="project-name">{{ project.title.split('｜')[0] }}</h3><p class="project-subtitle">{{ project.title.split('｜')[1] }}</p>
+            <p class="project-outcome"><b>结果</b>{{ project.outcome }}</p>
             <p class="project-intro">{{ project.intro }}</p>
             <div class="iteration"><b>核心产品迭代</b><p>{{ project.iteration }}</p></div>
             <div class="card-tags"><span v-for="tag in project.tags" :key="tag">{{ tag }}</span></div>
