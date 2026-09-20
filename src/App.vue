@@ -1,25 +1,77 @@
 <script setup>
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, onMounted, onBeforeUnmount } from 'vue'
 
 const openProject = ref(null)
-const radarView = ref('before')
 const prismView = ref('fact')
 const opsChoice = ref('steady')
-const copied = ref(false)
-const copyEmail = async () => {
-  await navigator.clipboard.writeText('duyufei000@126.com')
-  copied.value = true
-  window.setTimeout(() => { copied.value = false }, 1800)
+const copied = ref('')
+const stage = ref(null)
+const turning = ref(false)
+const progress = ref(0)
+const onScroll = () => {
+  const doc = document.documentElement
+  const max = doc.scrollHeight - window.innerHeight
+  progress.value = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0
 }
-const toggleProject = async (id) => {
+let observer
+let copyTimer
+const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+const copyEmail = async () => {
+  try {
+    await navigator.clipboard.writeText('duyufei000@126.com')
+    copied.value = '邮箱已复制'
+  } catch {
+    copied.value = '复制未成功，可点击邮箱直接联系'
+  }
+  clearTimeout(copyTimer)
+  copyTimer = window.setTimeout(() => { copied.value = '' }, 5000)
+}
+const toggleProject = async id => {
   openProject.value = openProject.value === id ? null : id
   await nextTick()
-  if (openProject.value) document.querySelector(`#detail-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  if (openProject.value) document.getElementById('detail-' + id)?.scrollIntoView({ behavior: reducedMotion() ? 'instant' : 'smooth', block: 'start' })
 }
+const moveSculpture = event => {
+  if (reducedMotion() || event.pointerType === 'touch' || !stage.value) return
+  turning.value = true
+  const bounds = stage.value.getBoundingClientRect()
+  stage.value.style.setProperty('--turn-x', ((event.clientY - bounds.top) / bounds.height - .5) * -12 + 'deg')
+  stage.value.style.setProperty('--turn-y', ((event.clientX - bounds.left) / bounds.width - .5) * 16 + 'deg')
+}
+const resetSculpture = () => {
+  turning.value = false
+  stage.value?.style.setProperty('--turn-x', '0deg')
+  stage.value?.style.setProperty('--turn-y', '0deg')
+}
+onMounted(() => {
+  onScroll()
+  window.addEventListener('scroll', onScroll, { passive: true })
+  window.addEventListener('resize', onScroll, { passive: true })
+  const reveals = document.querySelectorAll('[data-reveal]')
+  if (reducedMotion() || !('IntersectionObserver' in window)) {
+    reveals.forEach(element => element.classList.add('is-visible'))
+    return
+  }
+  observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible')
+        observer.unobserve(entry.target)
+      }
+    })
+  }, { threshold: .06 })
+  reveals.forEach(element => observer.observe(element))
+})
+onBeforeUnmount(() => {
+  observer?.disconnect()
+  clearTimeout(copyTimer)
+  window.removeEventListener('scroll', onScroll)
+  window.removeEventListener('resize', onScroll)
+})
 
 const projects = [
   {
-    no: '02', id: 'plugin', featured: true, flip: true,
+    no: '01', id: 'plugin', featured: true, flip: true,
     stack: '浏览器扩展 · 内容脚本 · 大模型 API',
     outcome: '已通过 Microsoft Edge 商店审核并公开上架；未做推广，因此不写用户量与效率提升。',
     title: 'AI Job Radar｜招聘网页内的岗位决策助手',
@@ -44,7 +96,7 @@ const projects = [
     ]
   },
   {
-    no: '03', id: 'prism',
+    no: '02', id: 'prism',
     stack: 'Next.js · TypeScript · 结构化输出约束',
     outcome: '已上线，可在线完成一次从事件描述到结构化输出的完整流程。',
     title: '多棱镜｜人生事件多角度解释工具',
@@ -69,7 +121,7 @@ const projects = [
     ]
   },
   {
-    no: '04', id: 'mudanting', flip: true,
+    no: '03', id: 'mudanting', flip: true,
     stack: 'React · TypeScript · 检索式阅读',
     outcome: '已上线，面向高一学生的古典戏曲互动阅读，可直接在线打开。',
     title: '牡丹亭｜由文字重新展开的互动阅读',
@@ -92,7 +144,7 @@ const projects = [
     ]
   },
   {
-    no: '05', id: 'ops', supporting: true,
+    no: '04', id: 'ops', supporting: true,
     stack: '微信小程序 · 状态模型 · 分支逻辑',
     outcome: '微信小程序已上线，含 7 条分支可通过小程序码体验完整章节。',
     title: '探索运营｜内容平台运营策略推演小程序',
@@ -101,7 +153,7 @@ const projects = [
     iteration: '第一版发布后，体验者反馈不容易理解玩法，因此重新修改了新手引导、任务说明和反馈文案，降低首次体验的理解成本。',
     evidence: { task: '通过具体选择理解内容平台中的流量、信任、风险和商业化取舍。', assumption: '只要规则和事件足够完整，用户就能理解玩法。', tradeoff: '第一版用户不容易理解目标和选择后果，因此重做新手引导、任务说明与即时反馈，而不是继续增加更多事件。', validation: '微信小程序已上线，可以直接体验完整章节流程。' },
     tags: ['微信小程序', '已上线', '可直接体验', '个人独立项目'],
-    video: 'media/explore-ops-small.mp4', poster: 'media/explore-ops-poster.jpg', qr: 'media/explore-ops-miniprogram-code.jpg',
+    video: 'media/explore-ops-small.mp4', poster: 'media/explore-ops-poster.jpg', shot: 'media/explore-ops-search.jpg', qr: 'media/explore-ops-miniprogram-code.jpg',
     primaryLabel: '查看项目复盘', secondaryLabel: '立即体验', secondaryHref: '#ops-qr',
     detail: [
       ['01 项目概览', '一款章节式运营策略推演小程序，让用户通过内容选择、平台反馈和状态变化理解运营决策。'],
@@ -126,101 +178,137 @@ const process = [
   ['03', '做出可运行版本', '把浏览器扩展、AI 应用、互动阅读和微信小程序真正做出来，而不是只停留在原型图。'],
   ['04', '根据限制继续重构', '根据真实体验重构 Radar，根据用户反馈修改探索运营，也在《牡丹亭》中收缩信息、保留阅读节奏。']
 ]
+
+// 作品类型筛选用；顺序即筛选条顺序
+const categories = [
+  ['all', '全部'],
+  ['plugin', '浏览器扩展'],
+  ['prism', 'AI 应用'],
+  ['mudanting', '互动阅读'],
+  ['ops', '微信小程序'],
+  ['agent', '本地 Agent']
+]
+const filter = ref('all')
+
+// 首屏事实条：数字由作品数据数出，不手写。本地自用 = 下方 Agent 卡 1 个
+const shippedCount = projects.filter(p => /已上线|已上架/.test(p.status)).length
+const heroFacts = [
+  ['作品', String(projects.length + 1).padStart(2, '0')],
+  ['已上线 / 上架', String(shippedCount).padStart(2, '0')],
+  ['本地自用', '01']
+]
+
+// 这个站点的迭代记录，取自 ISSUES.md 里真实发生过的事
+const siteLog = [
+  ['09-18', '视觉重设计：暖纸色、橙色环结、混合项目版式'],
+  ['09-19', '手机端导航、字体加载、减少动效三处修复'],
+  ['09-20', '环结改为按几何计算明暗，手写 SVG 生成器'],
+  ['09-20', '新增「方法」段落、栏目索引与滚动进度']
+]
+
+// 首屏与作品之间的刻度带；条目全部取自 About 的能力行与各项目 stack，不新增说法
+const tickerKeys = [
+  '问题拆解', '用户流程', '原型与交互', 'AI 输出规则', '需求优先级', '版本复盘',
+  '浏览器扩展', '微信小程序', '大模型 API', '结构化输出', 'UI Automation', 'SQLite'
+]
 </script>
 
 <template>
-  <div class="site-shell">
-    <nav class="nav shell">
-      <a class="brand" href="#top"><span>DYF</span><b>杜雨菲的产品作品集</b></a>
-      <div class="nav-links"><a href="#work">代表项目</a><a href="#process">工作方式</a><a href="#education">教育与技能</a><a class="nav-cta" href="mailto:duyufei000@126.com">联系我</a></div>
-    </nav>
+  <div class="studio">
+    <a class="skip-link" href="#work">跳到作品</a>
+    <div class="read-progress" :style="{ transform: 'scaleX(' + progress + ')' }" aria-hidden="true"></div>
+    <header class="masthead">
+      <a class="wordmark" href="#top" aria-label="杜雨菲，回到首页">雨<span class="logo-dot">.</span><small>DU YUFEI<br>PRODUCT & CODE</small></a>
+      <nav aria-label="主导航"><a href="#work">作品 <sup>05</sup></a><a href="#process">方法</a><a href="#about">关于我</a><a class="nav-contact" href="#contact">聊聊想法 <span>↗</span></a></nav>
+    </header>
 
-    <main id="top">
-      <section class="hero shell job-hero">
-        <div class="hero-copy">
-          <p class="eyebrow"><i></i>正在求职 · 武汉 / 北京 · 可尽快到岗</p>
-          <h1>杜雨菲<span class="hero-role">AI 产品经理 / 产品助理</span></h1>
-          <p class="hero-claim">把重复的判断做成能跑起来、<em>出错时能停下来</em>的 AI 工具。</p>
-          <p class="lead">计算机科学与技术本科。独立完成过浏览器扩展、AI 应用与微信小程序：从问题定义、交互到实现上线，都是我自己推进的。</p>
-          <div class="actions"><a class="button primary" href="#work">看代表项目</a><a class="hero-link" :href="asset('杜雨菲_AI产品助理_简历.pdf')" download>下载简历 ↓</a><a class="hero-link" href="mailto:duyufei000@126.com">duyufei000@126.com</a></div>
-        </div>
-        <aside class="hero-plate"><div class="hero-product"><img :src="asset('media/ai-job-plugin-poster.jpg')" alt="AI Job Radar 在招聘网页中的真实分析界面"><div class="hero-decision"><span>岗位判断</span><b>优先沟通</b><p>硬门槛：满足本科要求<br>简历证据：独立上线 AI 产品<br>下一步：生成可编辑招呼语</p></div></div><small class="hero-caption">AI Job Radar · Edge 商店已上架 · 招聘网页内的真实界面</small></aside>
-      </section>
-      <div class="proof-strip shell"><span>Edge 商店已上架</span><span>微信小程序已上线</span><span>互动阅读作品在线</span><span>本地 Agent 自用迭代中</span></div>
-
-      <section id="work" class="section shell work-home">
-        <header class="section-head"><div><div class="folio"><span>01 / 04</span><span>SELECTED WORK</span></div><p class="kicker">代表项目</p><h2>具体项目，<br>具体判断。</h2></div><p>我不把项目写成功能列表，而是展示：问题如何被发现、方案为什么改变，以及我最终保留和删除了什么。</p></header>
-
-        <article class="home-project featured agent-card">
-          <div class="card-copy">
-            <div class="card-top"><span>01</span><p><i></i>本地自用 · 仍在迭代 · 代码未公开</p></div>
-            <h3 class="project-name">求职 Agent</h3>
-            <p class="project-subtitle">从岗位阅读到发送核验的自动化工作流</p>
-            <p class="project-outcome"><b>结果</b>在真实账号上按单轮上限运行，每条记录逐条核验；本地自用，代码未公开。</p>
-            <p class="project-intro">把每天重复的岗位阅读、硬门槛判断、招呼语生成和桌面操作串成一条流水线，再用去重、状态记录和发送前校验约束它。目标不是“多发”，而是“错的时候能停下来”。</p>
-            <div class="iteration"><b>核心取舍：先有安全边界，再谈效率</b><p>第一版只追求跑通，出现过“发送结果不确定却继续往下发”的情况。后来把两种情况分开：结果未知一律停机并禁止重发，只有确定没发出的局部故障才允许跳过当前岗位；连续失败阈值、否定句识别、发送前身份校验都补了回归测试。</p></div>
-            <div class="card-tags"><span>Python</span><span>UI Automation</span><span>SQLite</span><span>大模型 API</span><span>文本控制台</span><span>规则与风控边界</span></div>
-          </div>
-          <div class="card-media mechanism-media">
-            <div class="video-head"><div><span>运行输出 · 岗位信息已脱敏</span><b>出错时停下来，而不是继续发</b></div><small>{{ '本地自用' }}</small></div>
-            <pre class="agent-log">$ python browse_and_apply.py --limit 5
-OPEN:AI应用开发工程师
-SKIP:DETAIL_JOB_MISMATCH 卡片与详情不是同一岗位 → <b>本岗位不发送</b>
-LOCAL_SKIP:方向偏离：销售类岗位
-SKIP:SEND_PREFLIGHT_FAILED（第 1 次）本岗位未发送，继续下一个岗位
-REUSE_JD_DECISION：同一份 JD 已判断，本次无需调用模型
-STOP:SEND_AMBIGUOUS：发送结果待核实；<b>整轮停止，禁止自动重发</b>
-DONE: reviewed=12 verified_sent=3</pre>
-            <p class="agent-note">以上是真实运行日志的行格式，岗位名、公司名与人名已替换为通用描述。</p>
-            <div class="card-info"><span>角色</span><b>独立完成：需求、规则与实现</b><span>状态</span><b>本地自用 · 仍在迭代</b><span>技术</span><b>Python · UI Automation · SQLite · 大模型 API</b><span>用户任务</span><b>减少重复的岗位阅读与初步判断</b></div>
-          </div>
-
-          <div class="row-evidence"><div><b>最初假设</b><p>只要模型判断够准，其余交给自动重试就可以。</p></div><div><b>关键取舍</b><p>身份不符、平台风险提示、发送结果未知时一律停机；不为提高数量放宽风控边界。</p></div><div><b>当前验证</b><p>已在真实账号上按单轮上限运行并逐条核验记录；代码未公开，也不宣称效率提升比例。</p></div></div>
-        </article>
-
-        <article v-for="project in projects" :key="project.id" :id="project.id" class="home-project" :class="{ featured: project.featured, supporting: project.supporting, flip: project.flip }">
-          <div class="card-copy">
-            <div class="card-top"><span>{{ project.no }}</span><p><i></i>{{ project.status }}</p></div>
-            <h3 class="project-name">{{ project.title.split('｜')[0] }}</h3><p class="project-subtitle">{{ project.title.split('｜')[1] }}</p>
-            <p class="project-outcome"><b>结果</b>{{ project.outcome }}</p>
-            <p class="project-intro">{{ project.intro }}</p>
-            <div class="iteration"><b>核心产品迭代</b><p>{{ project.iteration }}</p></div>
-            <div class="card-tags"><span v-for="tag in project.tags" :key="tag">{{ tag }}</span></div>
-            <div class="card-actions"><button class="button primary" type="button" @click="toggleProject(project.id)" :aria-expanded="openProject === project.id">{{ openProject === project.id ? '收起项目复盘' : project.primaryLabel }}</button><a class="button" :href="project.secondaryHref" :target="project.external ? '_blank' : null" :rel="project.external ? 'noreferrer' : null">{{ project.secondaryLabel }}</a><a v-if="project.id === 'plugin'" class="button store-button" href="https://microsoftedge.microsoft.com/addons/detail/aidmlojjjgebhogkffbebnfpjhfbpfmm" target="_blank" rel="noreferrer">下载 Edge 插件</a></div>
-          </div>
-
-          <div class="card-media mechanism-media" :id="`demo-${project.id}`">
-            <template v-if="project.id === 'plugin'"><div class="video-head"><div><span>真实产品界面</span><b>从完整 JD 生成行动判断</b></div><small>{{ project.status }}</small></div><video :src="asset(project.video)" :poster="asset(project.poster)" controls preload="metadata" playsinline :aria-label="`${project.title} 演示视频`"></video></template>
-            <div v-else-if="project.id === 'prism'" class="prism-mechanism"><span class="mechanism-label">输入事件</span><h4>“他没有回复我。”</h4><div class="mechanism-tabs"><button :class="{active: prismView === 'fact'}" @click="prismView = 'fact'">事实</button><button :class="{active: prismView === 'possibility'}" @click="prismView = 'possibility'">不同解释</button><button :class="{active: prismView === 'verify'}" @click="prismView = 'verify'">下一步验证</button></div><p v-if="prismView === 'fact'"><b>可以确认：</b>消息已发出，目前没有收到回复。</p><p v-else-if="prismView === 'possibility'"><b>还有可能：</b>正在忙、没有看到、不知道如何回应，或暂时不想回复。</p><p v-else><b>可以验证：</b>等待一个合理时间，再通过其他行为观察关系，而不是立即认定原因。</p></div>
-            <a v-else-if="project.id === 'mudanting'" class="mudanting-mechanism" :href="project.secondaryHref" target="_blank" rel="noreferrer"><img :src="asset(project.poster)" alt="《牡丹亭·惊梦》互动阅读中的游园画卷"><div><span class="mechanism-label">皂罗袍 · 互动阅读</span><h4>原来姹紫嫣红开遍，<br>似这般都付与断井颓垣。</h4><p>点击进入一场由文字重新展开的阅读</p></div></a>
-            <div v-else class="ops-mechanism"><span class="mechanism-label">第 03 章 · 流量波动</span><h4>热点突然出现，你会怎么选？</h4><div class="ops-stats"><p><b>关注度</b><i>{{ opsChoice === 'trend' ? '+24' : '+8' }}</i></p><p><b>信任度</b><i>{{ opsChoice === 'trend' ? '-6' : '+12' }}</i></p><p><b>平台风险</b><i>{{ opsChoice === 'trend' ? '上升' : '稳定' }}</i></p></div><div class="ops-actions"><button :class="{active: opsChoice === 'trend'}" @click="opsChoice = 'trend'">立即追热点</button><button :class="{active: opsChoice === 'steady'}" @click="opsChoice = 'steady'">坚持垂直内容</button></div><div id="ops-qr" class="qr-entry"><img :src="asset(project.qr)" alt="探索运营微信小程序码"><div><b>微信扫码体验</b><p>小程序目前在线。</p></div></div></div>
-            <div v-if="project.featured" class="radar-switch" aria-label="AI Job Radar 产品迭代对比">
-              <div class="switch-tabs" role="tablist"><button type="button" :class="{ active: radarView === 'before' }" @click="radarView = 'before'">第一版方案</button><button type="button" :class="{ active: radarView === 'after' }" @click="radarView = 'after'">重构后方案</button></div>
-              <div v-if="radarView === 'before'" class="flow-panel"><b>第一版</b><p>浏览招聘网站 → 搬入 Radar → 等待分析 → 返回招聘网站 → 手动沟通</p><span>问题：增加页面切换和岗位维护成本。</span></div>
-              <div v-else class="flow-panel improved"><b>重构后</b><p>浏览招聘网站 → 页面内获得判断 → 决定是否沟通</p><span>结果：不改变用户原有使用场景。</span></div>
-              <strong class="decision-proof">我不是因为第一版无法实现而改变方案，而是因为它已经能运行，却没有真正减少用户成本。</strong>
+    <main>
+      <section id="top" class="hero"><div class="dots d-hero" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <div class="hero-topline"><span><i class="status-dot"></i> OPEN TO WORK · 武汉 / 北京</span></div>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="tiny-label">你好，我是杜雨菲 / AI 产品与应用</p>
+            <h1>保持好奇。<br>把想法<span class="last-line">做<span class="hand-circle">出来<svg viewBox="0 0 240 112" aria-hidden="true"><path d="M225 27C195 4 58-1 21 33S-3 94 111 101 247 54 225 27M219 22C184 5 49 12 17 44"/></svg></span><span class="orange-dot">。</span></span></h1>
+            <div class="hero-bottom">
+              <p>做产品，也把它写成代码。<br>我从真实的小问题出发，<br>让 AI 走进可以使用的日常。</p>
+              <a class="round-link" href="#work" aria-label="向下浏览我的作品"><span>探索作品</span><b>↘</b></a>
             </div>
-            <div class="card-info"><span>角色</span><b>独立完成：产品判断、交互与实现</b><span>状态</span><b>{{ project.status }}</b><span>技术</span><b>{{ project.stack }}</b><span>用户任务</span><b>{{ project.evidence.task }}</b></div>
           </div>
-
-          <div class="row-evidence"><div><b>最初假设</b><p>{{ project.evidence.assumption }}</p></div><div><b>关键取舍</b><p>{{ project.evidence.tradeoff }}</p></div><div><b>当前验证</b><p>{{ project.evidence.validation }}</p></div></div>
-
-          <section v-if="openProject === project.id" :id="`detail-${project.id}`" class="case-detail">
-            <header><p class="kicker">项目详情</p><h3 class="project-name">{{ project.title.split('｜')[0] }}</h3><p class="project-subtitle">{{ project.title.split('｜')[1] }}</p></header>
-            <div class="detail-grid"><details v-for="(section, index) in project.detail" :key="section[0]" :open="index === 0"><summary><span>{{ section[0] }}</span><i>展开</i></summary><p>{{ section[1] }}</p></details></div>
-            <div class="detail-links"><a v-if="project.id === 'plugin'" class="button primary" href="https://microsoftedge.microsoft.com/addons/detail/aidmlojjjgebhogkffbebnfpjhfbpfmm" target="_blank" rel="noreferrer">在 Edge 商店查看</a><a v-if="project.id === 'prism'" class="button primary" href="https://deluxe-cheesecake-203e56.netlify.app/" target="_blank" rel="noreferrer">在线体验多棱镜</a><a v-if="project.id === 'mudanting'" class="button primary" href="https://yuyuyyyyyyyyyyyy.github.io/mudanting-jingmeng/" target="_blank" rel="noreferrer">在线体验《牡丹亭》</a><a v-if="project.id === 'ops'" class="button primary" href="#ops-qr">扫描小程序码体验</a><a class="button" :href="`#demo-${project.id}`">查看项目画面</a></div>
-          </section>
-        </article>
+          <div class="slipwall" aria-hidden="true">
+            <template v-for="step in process" :key="'s' + step[0]"><div class="slip"><b>{{ step[0] }}</b><span>{{ step[1] }}</span></div></template>
+            <template v-for="project in projects" :key="'p' + project.id"><div class="slip slip-p"><span>{{ project.title.split('｜')[0] }}</span><em>{{ project.status }}</em></div></template>
+            <div class="slip slip-a"><span>一个真实问题</span></div>
+            <div class="slip slip-b"><span>一个可运行的答案</span></div>
+            <div class="slip slip-f"><span>2025 届 · 计算机科学与技术</span></div>
+            <div class="slip slip-f"><span>AI 产品经理 / 产品助理</span></div>
+            <div class="slipwall-note"><span>IDEA ↔ REALITY</span></div>
+          </div>
+        </div>
+        <div class="hero-footer"><span>AI 产品经理 / 产品助理 · AI 应用与 Agent 开发<br>计算机科学与技术本科 · 独立产品实践</span><dl class="hero-facts"><template v-for="fact in heroFacts" :key="fact[0]"><dt>{{ fact[0] }}</dt><dd>{{ fact[1] }}</dd></template></dl><a :href="asset('杜雨菲_AI产品助理_简历.pdf')" download>下载我的简历 ↗</a></div>
       </section>
 
-      <section class="statement-band"><p>我把判断做成能跑起来的东西，<em>并且知道它什么时候会错。</em></p></section>
-      <section id="process" class="section process-section"><div class="shell"><header class="section-head inverse"><div><div class="folio"><span>02 / 04</span><span>HOW I WORK</span></div><p class="kicker">我的产品工作方式</p><h2>我如何把产品判断<br>落到真实版本里。</h2></div></header><div class="process-grid"><article v-for="item in process" :key="item[0]"><b>{{ item[0] }}</b><h3>{{ item[1] }}</h3><p>{{ item[2] }}</p></article></div></div></section>
+      <div class="ticker" aria-hidden="true"><div class="ticker-track"><span v-for="n in 2" :key="n" class="ticker-set"><i v-for="k in tickerKeys" :key="k">{{ k }}</i></span></div></div>
 
-      <section id="education" class="shell education-compact"><div class="folio"><span>03 / 04</span><span>ABOUT</span></div><p class="kicker">我能承担的产品工作</p><div class="education-three"><article><span>教育背景</span><h3>计算机科学与技术本科</h3><p>长江师范学院｜山东科技大学联合培养</p><p>专业排名第 4｜优秀奖学金｜CET-4</p></article><article><span>产品工作</span><p>问题拆解、用户流程、原型与交互、AI 输出规则、需求优先级、版本复盘</p></article><article><span>技术理解</span><p>Vue、Next.js、TypeScript、Node.js、浏览器扩展、微信小程序、大模型接口与 Git</p><p>能独立制作验证版本，并结合实现限制调整产品方案。</p></article></div></section>
+      <section id="work" class="works"><div class="dots d-works" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <div class="section-rule"><span>作品</span><span>01 / 04</span></div>
+        <header class="section-heading" data-reveal><div><span class="tiny-label">SELECTED WORK / 01—05</span><h2>一些想法，<em>已经发生。</em></h2></div><p>可以打开，可以体验。<br>也可以看看，我为什么这样做。</p></header>
+        <div class="works-filter" role="group" aria-label="按类型筛选作品"><span class="tiny-label">筛选</span><button v-for="c in categories" :key="c[0]" :aria-pressed="filter === c[0]" @click="filter = c[0]">{{ c[1] }}</button></div>
+        <div class="project-grid">
+          <article v-for="project in projects" v-show="filter === 'all' || filter === project.id" :key="project.id" :id="project.id" class="project-card" :class="'project-' + project.id" data-reveal>
+            <div class="project-cover" :id="'demo-' + project.id">
+              <div class="cover-label"><span>{{ project.id === 'plugin' ? '01 / BROWSER EXTENSION' : project.id === 'prism' ? '02 / AI APPLICATION' : project.id === 'mudanting' ? '03 / INTERACTIVE READING' : '04 / WECHAT MINI PROGRAM' }}</span><span>↗</span></div>
+              <template v-if="project.id === 'plugin'">
+                <div class="radar-title"><span>AI Job Radar</span><p>把判断，放回工作现场。</p></div>
+                <div class="browser-frame"><div class="browser-chrome"><i></i><i></i><i></i><span>AI Job Radar / 产品演示</span></div><video :src="asset(project.video)" :poster="asset(project.poster)" controls preload="none" playsinline aria-label="AI Job Radar 产品演示"></video></div>
+                <span class="cover-caption">招聘网页内的岗位决策助手 <b>EDGE 商店已上架 ↗</b></span>
+              </template>
+              <template v-else-if="project.id === 'prism'">
+                <span class="prism-orbit orbit-one" aria-hidden="true"></span><span class="prism-orbit orbit-two" aria-hidden="true"></span>
+                <div class="prism-preview"><span class="tiny-label">换个角度，看看这件事。</span><h3>“他没有回复我。”</h3><div class="segmented" aria-label="选择分析角度"><button v-for="(label, key) in {fact:'事实', possibility:'不同解释', verify:'下一步'}" :key="key" :aria-pressed="prismView === key" @click="prismView = key">{{ label }}</button></div><p class="prism-answer" aria-live="polite">{{ prismView === 'fact' ? '消息已经发出。目前，还没有收到回复。' : prismView === 'possibility' ? '可能在忙、没看到，或还不知道如何回应。解释并不只有一种。' : '等待一个合理时间，再观察其他行为。先别急着认定原因。' }}</p><p class="prism-next"><span>下一步</span>{{ prismView === 'fact' ? '分清哪些是已确认的事，哪些还只是推测。' : prismView === 'possibility' ? '挑一个解释，找一件能验证它的小事。' : '设定一个期限；到期仍无回复，就把它当作信息。' }}</p></div>
+                <span class="cover-caption">多棱镜 <b>FACT / POSSIBILITY / ACTION</b></span>
+              </template>
+              <template v-else-if="project.id === 'mudanting'">
+                <img class="reading-image" :src="asset(project.poster)" loading="lazy" alt="牡丹亭互动阅读的游园画卷">
+                <div class="reading-overlay"><span>一场由文字展开的游园</span><h3>原来姹紫<br>嫣红开遍。</h3><a :href="project.secondaryHref" target="_blank" rel="noreferrer">入园，读一出戏 ↗</a></div>
+              </template>
+              <template v-else>
+                <div class="ops-preview"><p class="tiny-label">探索运营 / 第 03 章</p><h3>流量，还是信任？</h3><p>热点突然出现。你的选择，会改变接下来的故事。</p><div class="ops-meters"><div><span>关注度</span><b>{{ opsChoice === 'trend' ? '+24' : '+8' }}</b></div><div><span>信任度</span><b>{{ opsChoice === 'trend' ? '−6' : '+12' }}</b></div><div><span>平台风险</span><b>{{ opsChoice === 'trend' ? '上升' : '稳定' }}</b></div></div><div class="segmented"><button :aria-pressed="opsChoice === 'trend'" @click="opsChoice = 'trend'">追赶热点 ↗</button><button :aria-pressed="opsChoice === 'steady'" @click="opsChoice = 'steady'">坚持内容 →</button></div><p class="ops-feedback" aria-live="polite"><span>平台反馈</span>{{ opsChoice === 'trend' ? '热点带来了曝光，但部分老读者开始质疑你的立场。' : '数据保持平稳，但这条热点的窗口正在关闭。' }}</p><div class="ops-branches"><span>剧情分支</span><i v-for="n in 7" :key="n" :class="{ on: n <= 3 }"></i><b>03 / 07</b></div></div>
+                <span class="cover-caption">每一次选择，都有回响。<b>WECHAT MINI PROGRAM</b></span><div class="ops-qr"><img :src="asset('media/explore-ops-miniprogram-code.jpg')" loading="lazy" alt="探索运营微信小程序码"><span>微信扫码体验</span></div>
+              </template>
+            </div>
+            <div class="project-info"><span class="project-no">{{ project.no }}</span><div><span class="project-kind">{{ project.status }}</span><h3>{{ project.title.split('｜')[0] }}</h3><p>{{ project.title.split('｜')[1] }}</p><p class="project-outcome">{{ project.outcome }}</p><p class="project-stack">{{ project.stack }}</p></div><button class="project-open" :aria-label="(openProject === project.id ? '收起' : '查看') + project.title.split('｜')[0] + '项目复盘'" :aria-expanded="openProject === project.id" :aria-controls="'detail-' + project.id" @click="toggleProject(project.id)">{{ openProject === project.id ? '−' : '↗' }}</button></div>
+            <section v-if="openProject === project.id" :id="'detail-' + project.id" class="case-detail">
+              <p class="tiny-label">BEHIND THE PROJECT</p><h4>为什么做，又为什么改变。</h4><p>{{ project.intro }}</p><p class="case-tags"><span v-for="t in project.tags" :key="t">{{ t }}</span></p><div class="case-assume"><span>最初假设</span><p>{{ project.evidence.assumption }}</p></div><div class="case-insight"><span>一次关键取舍</span><p>{{ project.iteration }}</p></div>
+              <div class="case-details"><details v-for="item in project.detail" :key="item[0]"><summary>{{ item[0] }} <span>＋</span></summary><p>{{ item[1] }}</p></details></div>
+              <figure class="case-figure"><img :src="asset(project.shot || project.poster)" loading="lazy" :alt="project.title.split('｜')[0] + ' 的产品画面'"><figcaption>{{ project.id === 'plugin' ? 'AI Job Radar：在招聘网页中给出判断结果的实际界面' : project.id === 'prism' ? '多棱镜：事实 → 多种解释 → 下一步的完整流程' : project.id === 'mudanting' ? '《牡丹亭》互动阅读的游园画卷' : '探索运营小程序：在微信搜索中可直接检索到' }}</figcaption></figure>
+              <video v-if="project.video && project.id !== 'plugin'" :src="asset(project.video)" :poster="asset(project.poster)" controls preload="none" playsinline :aria-label="project.title.split('｜')[0] + '演示视频'"></video>
+              <div v-if="project.qr" id="ops-qr" class="qr-entry"><img :src="asset(project.qr)" alt="探索运营微信小程序码"><p>微信扫码<br>体验探索运营</p></div>
+              <div class="case-links"><a v-if="project.id === 'plugin'" href="https://microsoftedge.microsoft.com/addons/detail/aidmlojjjgebhogkffbebnfpjhfbpfmm" target="_blank" rel="noreferrer">打开 Edge 商店 ↗</a><a v-else-if="project.external" :href="project.secondaryHref" target="_blank" rel="noreferrer">打开在线作品 ↗</a><span>{{ project.evidence.validation }}</span></div>
+            </section>
+          </article>
+        </div>
+      </section>
 
-      <section class="contact shell"><div class="folio"><span>04 / 04</span><span>CONTACT</span></div><p class="kicker">联系方式</p><h2>正在寻找 AI 产品经理<br>或产品助理岗位。</h2><div><a class="button lime" href="mailto:duyufei000@126.com">duyufei000@126.com</a><button class="copy-email" type="button" @click="copyEmail">{{ copied ? '邮箱已复制' : '复制邮箱' }}</button><a :href="asset('杜雨菲_AI产品助理_简历.pdf')" download>下载简历</a><a href="https://github.com/yuyuyyyyyyyyyyyy" target="_blank" rel="noreferrer">GitHub</a></div></section>
+      <section class="agent-section" v-show="filter === 'all' || filter === 'agent'"><article id="agent" class="agent-project" data-reveal>
+            <div class="agent-copy"><span class="tiny-label">05 / LOCAL AGENT · 持续自用</span><h3>让重复的事，<br>有一个<span>可靠的帮手。</span></h3><p>求职 Agent / 从岗位阅读、判断到发送核验，<br>把真实使用里的问题，一次次写进系统。</p><a href="mailto:duyufei000@126.com?subject=求职Agent演示">聊聊这个项目 <span>↗</span></a><small>本地运行 · 代码未公开 · 持续迭代</small></div>
+            <div class="terminal"><div class="terminal-head"><span><i></i> LOCAL AGENT</span><span>流程示意 / 非实时数据</span></div><div class="terminal-body"><p><span>01</span> READ <b>读取完整岗位信息</b></p><p><span>02</span> CHECK <b>核对门槛与个人经历</b></p><p><span>03</span> VERIFY <b>确认岗位与聊天对象</b></p><p class="terminal-stop"><span>!</span> RESULT UNKNOWN<br><strong>停止本轮，保留记录。<br>等待核实，禁止自动重发。</strong></p><p class="terminal-prompt">› <i></i></p></div><div class="terminal-foot">PYTHON <span>·</span> UI AUTOMATION <span>·</span> SQLITE</div></div>
+          </article></section>
+
+      <section id="process" class="process-section"><div class="dots d-process" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <div class="section-rule"><span>方法</span><span>02 / 04</span></div>
+        <div class="process-head" data-reveal><span class="tiny-label">HOW I WORK</span><h2>我如何把产品判断，<br>落到真实版本里。</h2><p>每一步都由一个具体项目推动，而不是先写好方法论再去找项目。</p></div>
+        <ol class="process-list"><li v-for="step in process" :key="step[0]" data-reveal><span class="process-no">{{ step[0] }}</span><h3>{{ step[1] }}</h3><p>{{ step[2] }}</p></li></ol>
+      </section>
+
+      <section id="about" class="about-section" data-reveal><div class="dots d-about" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <div class="section-rule"><span>关于</span><span>03 / 04</span></div>
+        <div class="about-title"><span class="tiny-label">THE PERSON BEHIND THE PRODUCTS</span><h2>先问为什么。<br>再试着<span>做出来。</span></h2><span class="about-star" aria-hidden="true">✳</span><figure class="about-photo"><img :src="asset('photo.jpg')" alt="杜雨菲" loading="lazy" width="1040" height="1456"><figcaption><span>杜雨菲</span><span>2026</span></figcaption></figure><div class="about-log"><span class="tiny-label">这个站点</span><dl><template v-for="row in siteLog" :key="row[0] + row[1]"><dt>{{ row[0] }}</dt><dd>{{ row[1] }}</dd></template></dl></div></div>
+        <div class="about-copy"><p class="about-lead">我是杜雨菲，计算机科学与技术本科。<br>喜欢在产品判断与动手实现之间，<br>寻找那个更有用的答案。</p><p>我独立推进问题定义、交互、代码和上线，也会因为真实使用的反馈改变方案。比如把求职助手从独立平台搬回招聘网页，把抽象的运营机制变成可体验的选择。</p><div class="about-facts"><div><span>教育</span><p>长江师范学院 · 计算机科学与技术（本科）｜2020.09 – 2025.06<br>“1+2+1”联合培养：大二、大三赴山东科技大学（青岛校区）交换近两年<br>大一专业排名第 4 · 优异奖学金 · CET-4<br>毕业设计：基于微服务架构的餐饮店原材料管理系统（独立前后端开发）</p></div><div><span>方向</span><p>AI 产品经理 / 产品助理<br>AI 应用与 Agent 开发</p></div><div><span>产品</span><p>问题拆解、用户流程、原型与交互<br>AI 输出规则、需求优先级、版本复盘</p></div><div><span>技术</span><p>Python、TypeScript、Vue、React / Next.js<br>浏览器扩展、大模型 API、SQLite 与 Git</p></div></div><div class="about-jobs"><span class="tiny-label">工作与项目经历</span><dl><dt>2024.08–2024.11</dt><dd>前端开发实习生 · 近未来（武汉）科技有限公司<br>实地参与真实项目开发流程，补全前端工程能力（HTML / CSS / JS、微信小程序、Next.js）；养成先想清楚再动手、用工程化方式保证质量的习惯。</dd><dt>2021.09–2023.01</dt><dd>卓越工程师项目 · 计算机专业负责人｜长江师范学院 × 山东科技大学<br>对接两校课程与学分体系，协助老师整理成绩、通知选课、收集转达同学问题，保障跨校学分转换顺畅。</dd></dl></div></div>
+      </section>
+
+      <section id="contact" class="contact-section" data-reveal><div class="dots d-contact" aria-hidden="true"><i></i><i></i><i></i><i></i></div><div class="section-rule"><span>联系</span><span>04 / 04</span></div><div class="contact-top"><span class="tiny-label">HAVE SOMETHING IN MIND?</span><span><i class="status-dot"></i> 开放工作与合作机会</span></div><a class="contact-title" href="mailto:duyufei000@126.com">下一个想法，<br>一起<span>发生。</span><b>↗</b></a><div class="contact-bottom"><div><a href="mailto:duyufei000@126.com">duyufei000@126.com</a><button @click="copyEmail">复制邮箱 ↗</button></div><div><a :href="asset('杜雨菲_AI产品助理_简历.pdf')" download>下载简历 ↗</a><a href="https://github.com/yuyuyyyyyyyyyyyy" target="_blank" rel="noreferrer">GitHub ↗</a></div></div><p class="copy-feedback" role="status">{{ copied }}</p></section>
     </main>
-    <footer class="footer shell"><span>© 2026 杜雨菲</span><span>AI 产品经理 / 产品助理作品集</span></footer>
+    <footer class="footer"><div class="dots d-footer" aria-hidden="true"><i></i><i></i></div><span>© 2026 杜雨菲</span><span class="footer-note">MADE WITH CURIOSITY & CODE.</span><span class="colophon">字体 Noto Serif SC · 手写 SVG 图形与动效 · 最后更新 2026-09</span><a href="#top">回到顶部 ↑</a></footer>
   </div>
 </template>
 

@@ -1,0 +1,146 @@
+/* ==========================================================================
+   排版尺度 —— 全站字号、行高、行宽只在这里定义，不要在 studio.css 里改字号
+   --------------------------------------------------------------------------
+   为什么单独成文件：studio.css 是压缩单行、部分规则超过 2000 字符，逐条改字号
+   既容易改漏也容易改错；这里用一个晚于 studio.css 载入的单向层统一覆盖。
+   所有选择器都加 `.studio ` 前缀以获得 +1 类名特异性，确保能盖住 studio.css
+   里同等或更高特异性的规则（含它的媒体查询）。
+
+   阶梯（桌面 → 手机）：
+     micro 12 → 11     mono 标签、元数据
+     cap   13.5 → 12.5 图注、次要标签
+     sm    15 → 14     次要正文
+     body  17 → 15.5   正文
+     lead  21 → 18     导语
+     h4    20 → 18     小标题
+     h3    30 → 26     卡片标题
+   改动前实测分布：≤13px 有 102 条声明，14–18px 只有 6 条——中段是空的，
+   这正是「字体太小又没设计感」的结构性原因。
+   ========================================================================== */
+:root{
+  --t-micro:12px; --t-cap:13.5px; --t-sm:15px; --t-body:17px;
+  --t-lead:21px; --t-h4:20px; --t-h4b:26px; --t-h3:30px;
+  --lh-micro:1.5; --lh-sm:1.75; --lh-body:1.85;
+  --measure:720px;            /* 正文行宽上限；中文约 42 字/行 */
+}
+@media(max-width:760px){
+  :root{
+    --t-micro:11px; --t-cap:12.5px; --t-sm:14px; --t-body:15.5px;
+    --t-lead:18px; --t-h4:18px; --t-h4b:22px; --t-h3:26px;
+    --measure:none;
+  }
+}
+
+/* 元数据 / 图注 —— 原 7–10px 全部提到 12px 以上 */
+.studio .section-rule{font-size:var(--t-micro);letter-spacing:.1em}
+.studio .wordmark small{font-size:var(--t-micro)}
+.studio sup{font-size:var(--t-micro)}
+.studio .tiny-label{font-size:var(--t-micro);line-height:var(--lh-micro);letter-spacing:.09em}
+.studio .hero-topline{font-size:var(--t-micro);line-height:1.7}
+.studio .stage-tag{font-size:var(--t-cap)}
+.studio .stage-tag span{font-size:var(--t-micro)}
+.studio .stage-footer{font-size:var(--t-micro)}
+.studio .hero-facts dt{font-size:var(--t-micro)}
+.studio .project-no{font-size:var(--t-micro)}
+.studio .cover-label{font-size:var(--t-micro)}
+.studio .browser-chrome span{font-size:var(--t-micro)}
+.studio .cover-caption b{font-size:var(--t-micro);letter-spacing:.06em}
+.studio .project-info .project-stack{font-size:var(--t-micro);line-height:var(--lh-micro)}
+.studio .prism-next span{font-size:var(--t-micro)}
+.studio .ops-feedback span{font-size:var(--t-micro)}
+.studio .case-tags span{font-size:var(--t-micro)}
+.studio .process-no{font-size:var(--t-micro)}
+.studio .agent-copy>small{font-size:var(--t-micro)}
+.studio .terminal-head{font-size:var(--t-micro)}
+.studio .terminal-foot{font-size:var(--t-micro)}
+.studio .footer{font-size:var(--t-micro);line-height:1.6}
+.studio .about-log dt{font-size:var(--t-micro)}
+.studio .about-photo figcaption{font-size:var(--t-micro)}
+
+/* 导航与按钮 */
+.studio .masthead nav{font-size:var(--t-sm)}
+.studio .works-filter button{font-size:var(--t-cap)}
+.studio .segmented button{font-size:var(--t-cap)}
+.studio .case-detail summary{font-size:var(--t-sm)}
+.studio .contact-bottom button{font-size:var(--t-cap)}
+
+/* 图注 / 次要标签 */
+.studio .round-link span{font-size:var(--t-cap)}
+.studio .hero-footer{font-size:var(--t-cap)}
+.studio .cover-caption{font-size:var(--t-cap)}
+.studio .project-kind{font-size:var(--t-cap)}
+.studio .reading-overlay>span{font-size:var(--t-cap)}
+.studio .reading-overlay a{font-size:var(--t-cap)}
+.studio .ops-meters span{font-size:var(--t-cap)}
+.studio .case-assume>span{font-size:var(--t-cap)}
+.studio .case-insight>span{font-size:var(--t-cap)}
+.studio .case-links>span{font-size:var(--t-cap)}
+.studio .terminal-body b{font-size:var(--t-cap)}
+.studio .terminal-stop strong{font-size:var(--t-cap)}
+.studio .contact-top{font-size:var(--t-cap)}
+.studio .copy-feedback{font-size:var(--t-cap)}
+.studio .about-log dd{font-size:var(--t-sm)}
+.studio .hero-facts dd{font-size:var(--t-sm)}
+
+/* 正文中段 —— 之前几乎不存在，是最主要的改动 */
+.studio .hero-bottom p{font-size:var(--t-body);line-height:var(--lh-body)}
+.studio .section-heading>p{font-size:var(--t-sm);line-height:var(--lh-sm)}
+.studio .project-info p{font-size:var(--t-sm);line-height:var(--lh-sm)}
+.studio .project-info .project-outcome{font-size:var(--t-sm);line-height:var(--lh-sm)}
+.studio .prism-answer{font-size:var(--t-sm);line-height:var(--lh-body);max-width:420px}
+.studio .prism-next{font-size:var(--t-sm);line-height:var(--lh-sm);max-width:420px}
+.studio .ops-preview>p:not(.tiny-label){font-size:var(--t-sm);line-height:var(--lh-sm);max-width:420px}
+.studio .ops-feedback{font-size:var(--t-sm);line-height:var(--lh-sm)}
+.studio .case-detail p{font-size:var(--t-body);line-height:var(--lh-body);max-width:var(--measure)}
+.studio .case-detail .case-assume p{font-size:var(--t-body);line-height:var(--lh-body);max-width:var(--measure)}
+.studio .case-links>a{font-size:var(--t-sm)}
+.studio .agent-copy>p{font-size:var(--t-sm);line-height:var(--lh-sm)}
+.studio .agent-copy>a{font-size:var(--t-sm)}
+.studio .terminal-body{font-size:var(--t-sm);line-height:1.85}
+.studio .process-head>p{font-size:var(--t-sm);line-height:var(--lh-sm)}
+.studio .process-list p{font-size:var(--t-sm);line-height:var(--lh-sm)}
+.studio .about-copy>p{font-size:var(--t-body);line-height:var(--lh-body);max-width:var(--measure)}
+.studio .about-copy .about-lead{font-size:var(--t-lead);line-height:1.8}
+.studio .about-facts>div{font-size:var(--t-sm);grid-template-columns:76px 1fr}
+.studio .contact-bottom{font-size:var(--t-sm)}
+.studio .radar-title p{font-size:var(--t-lead)}
+
+/* 小标题与卡片标题 —— 同步上调，保住层次对比 */
+.studio .project-info h3{font-size:var(--t-h3)}
+.studio .prism-preview h3{font-size:var(--t-h3)}
+.studio .case-detail h4{font-size:var(--t-h4b)}
+.studio .process-list h3{font-size:var(--t-h4)}
+.studio .section-heading h2{font-size:clamp(32px,3.6vw,56px)}
+.studio .about-title h2{font-size:clamp(36px,3.8vw,56px)}
+.studio .process-head h2{font-size:clamp(30px,3.2vw,44px)}
+.studio .agent-copy h3{font-size:clamp(28px,3.4vw,46px)}
+
+/* 展开的复盘：10 条详情在 1180px 单列里跑，一行 90 多字。改双列 + 行宽限制 */
+.studio .case-details{display:grid;grid-template-columns:1fr 1fr;gap:0 46px;align-items:start}
+.studio .case-details>details{break-inside:avoid}
+@media(max-width:900px){.studio .case-details{grid-template-columns:1fr;gap:0}}
+
+/* 首屏纸片墙的字号（ISSUES.md 36）——按约定，字号只在 type.css 定义 */
+.studio .slip b{font-size:var(--t-micro)}
+.studio .slip span{font-size:var(--t-cap);line-height:1.55;letter-spacing:-.01em}
+.studio .slip em{font-size:var(--t-micro);line-height:1.45}
+.studio .about-jobs dt{font-size:var(--t-micro)}
+.studio .about-jobs dd{font-size:var(--t-sm);line-height:1.7}
+.studio .case-figure figcaption{font-size:var(--t-cap);line-height:1.55}
+.studio .ops-qr span{font-size:var(--t-micro);line-height:1.4}
+.studio .slipwall-note{font-size:var(--t-micro)}
+@media(max-width:760px){
+  .studio .slip span{font-size:var(--t-micro)}
+}
+
+/* 封面高度：原来是六个手写魔法数字（390/350/360/355/440/545 散落在不同层里），
+   现在统一成「一个下限 + 内容自适应」（ISSUES.md 46）。这样既没有魔法数字，
+   也不会因为内容变化而溢出——同一行的两张卡靠 grid 拉伸天然等高。
+   prism 的内容实测最低要 420px，所以下限取 440。 */
+.studio .project-cover{height:auto;min-height:440px}
+.studio .project-plugin .project-cover{min-height:600px}
+.studio .prism-preview{padding-top:60px}
+.studio .ops-preview{padding-top:50px;padding-bottom:64px}
+@media(max-width:760px){
+  .studio .project-cover{min-height:420px}
+}
