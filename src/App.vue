@@ -19,7 +19,7 @@ const toggleProject = async (id) => {
 
 const projects = [
   {
-    no: '02', id: 'plugin', featured: true,
+    no: '02', id: 'plugin', featured: true, flip: true,
     title: 'AI Job Radar｜招聘网页内的岗位决策助手',
     status: '已上架 Edge 商店',
     intro: '帮助求职者在浏览招聘岗位时，快速判断硬门槛、职责匹配和是否值得沟通，并根据简历证据生成招呼语。',
@@ -65,7 +65,7 @@ const projects = [
     ]
   },
   {
-    no: '04', id: 'mudanting',
+    no: '04', id: 'mudanting', flip: true,
     title: '牡丹亭｜由文字重新展开的互动阅读',
     status: '已上线 · 可在线体验',
     intro: '围绕《牡丹亭·惊梦·皂罗袍》制作互动阅读场景，让“原来—姹紫嫣红—似这般—断井颓垣”不只被解释，也通过层层展开的交互、节奏与视觉被感受。',
@@ -132,15 +132,15 @@ const process = [
         <div class="hero-copy">
           <p class="eyebrow"><i></i>正在求职 · 可尽快到岗</p>
           <h1>把复杂判断，<br><em>变成下一步行动。</em></h1>
-          <p class="lead"><b>杜雨菲｜AI 产品经理 / 产品助理</b><br>计算机科学与技术本科，独立完成过浏览器扩展、AI 应用、互动阅读和微信小程序。<br>我从真实问题出发，借助 AI 跨越产品、交互和代码，把模糊想法推进到可运行版本，再根据失败、反馈与新的理解继续重构。</p>
-          <dl class="quick-facts"><div><dt>求职方向</dt><dd>AI 产品经理 / 产品助理</dd></div><div><dt>项目实践</dt><dd>AI 应用、互动叙事、浏览器扩展</dd></div><div><dt>可承担工作</dt><dd>需求拆解、流程与交互、AI 输出设计、原型验证、版本复盘</dd></div><div><dt>状态</dt><dd>可尽快到岗</dd></div></dl>
+          <p class="lead"><b>杜雨菲｜AI 产品经理 / 产品助理</b><br>计算机科学与技术本科，独立做过浏览器扩展、AI 应用与微信小程序。<br>从真实问题出发，把模糊想法推进到可运行版本，再根据失败与反馈继续重构。</p>
+          <dl class="quick-facts"><div><dt>求职方向</dt><dd>AI 产品经理 / 产品助理</dd></div><div><dt>项目实践</dt><dd>AI 应用、互动叙事、浏览器扩展</dd></div><div><dt>可承担工作</dt><dd>需求拆解、流程与交互、AI 输出设计、原型验证、版本复盘</dd></div><div><dt>期望城市</dt><dd>武汉 / 北京</dd></div></dl>
           <div class="actions"><a class="button primary" href="#work">查看代表项目</a><a class="button" :href="asset('杜雨菲_AI产品助理_简历.pdf')" download>下载简历</a><a class="button text-button" href="mailto:duyufei000@126.com">联系我</a></div>
         </div>
-        <aside class="hero-product"><img :src="asset('media/ai-job-plugin-poster.jpg')" alt="AI Job Radar 在招聘网页中的真实分析界面"><div class="hero-decision"><span>岗位判断</span><b>优先沟通</b><p>硬门槛：满足本科要求<br>简历证据：独立上线 AI 产品<br>下一步：生成可编辑招呼语</p></div></aside>
+        <aside class="hero-plate"><div class="hero-product"><img :src="asset('media/ai-job-plugin-poster.jpg')" alt="AI Job Radar 在招聘网页中的真实分析界面"><div class="hero-decision"><span>岗位判断</span><b>优先沟通</b><p>硬门槛：满足本科要求<br>简历证据：独立上线 AI 产品<br>下一步：生成可编辑招呼语</p></div></div><small class="hero-caption">AI Job Radar · Edge 商店已上架 · 招聘网页内的真实界面</small></aside>
       </section>
 
       <section id="work" class="section shell work-home">
-        <header class="section-head"><div><p class="kicker">代表项目</p><h2>具体项目，<br>具体判断。</h2></div><p>我不把项目写成功能列表，而是展示：问题如何被发现、方案为什么改变，以及我最终保留和删除了什么。</p></header>
+        <header class="section-head"><div><div class="folio"><span>01 / 04</span><span>SELECTED WORK</span></div><p class="kicker">代表项目</p><h2>具体项目，<br>具体判断。</h2></div><p>我不把项目写成功能列表，而是展示：问题如何被发现、方案为什么改变，以及我最终保留和删除了什么。</p></header>
 
         <article class="home-project featured agent-card">
           <div class="card-copy">
@@ -166,7 +166,7 @@ DONE: reviewed=12 verified_sent=3</pre>
           </div>
         </article>
 
-        <article v-for="project in projects" :key="project.id" :id="project.id" class="home-project" :class="{ featured: project.featured, supporting: project.supporting }">
+        <article v-for="project in projects" :key="project.id" :id="project.id" class="home-project" :class="{ featured: project.featured, supporting: project.supporting, flip: project.flip }">
           <div class="card-copy">
             <div class="card-top"><span>{{ project.no }}</span><p><i></i>{{ project.status }}</p></div>
             <h3 class="project-name">{{ project.title.split('｜')[0] }}</h3><p class="project-subtitle">{{ project.title.split('｜')[1] }}</p>
@@ -198,11 +198,12 @@ DONE: reviewed=12 verified_sent=3</pre>
         </article>
       </section>
 
-      <section id="process" class="section process-section"><div class="shell"><header class="section-head inverse"><div><p class="kicker">我的产品工作方式</p><h2>我如何把产品判断<br>落到真实版本里。</h2></div></header><div class="process-grid"><article v-for="item in process" :key="item[0]"><b>{{ item[0] }}</b><h3>{{ item[1] }}</h3><p>{{ item[2] }}</p></article></div></div></section>
+      <section class="statement-band"><p>我把判断做成能跑起来的东西，<em>并且知道它什么时候会错。</em></p></section>
+      <section id="process" class="section process-section"><div class="shell"><header class="section-head inverse"><div><div class="folio"><span>02 / 04</span><span>HOW I WORK</span></div><p class="kicker">我的产品工作方式</p><h2>我如何把产品判断<br>落到真实版本里。</h2></div></header><div class="process-grid"><article v-for="item in process" :key="item[0]"><b>{{ item[0] }}</b><h3>{{ item[1] }}</h3><p>{{ item[2] }}</p></article></div></div></section>
 
-      <section id="education" class="shell education-compact"><p class="kicker">我能承担的产品工作</p><div class="education-three"><article><span>教育背景</span><h3>计算机科学与技术本科</h3><p>长江师范学院｜山东科技大学联合培养</p><p>专业排名第 4｜优秀奖学金｜CET-4</p></article><article><span>产品工作</span><p>问题拆解、用户流程、原型与交互、AI 输出规则、需求优先级、版本复盘</p></article><article><span>技术理解</span><p>Vue、Next.js、TypeScript、Node.js、浏览器扩展、微信小程序、大模型接口与 Git</p><p>能独立制作验证版本，并结合实现限制调整产品方案。</p></article></div></section>
+      <section id="education" class="shell education-compact"><div class="folio"><span>03 / 04</span><span>ABOUT</span></div><p class="kicker">我能承担的产品工作</p><div class="education-three"><article><span>教育背景</span><h3>计算机科学与技术本科</h3><p>长江师范学院｜山东科技大学联合培养</p><p>专业排名第 4｜优秀奖学金｜CET-4</p></article><article><span>产品工作</span><p>问题拆解、用户流程、原型与交互、AI 输出规则、需求优先级、版本复盘</p></article><article><span>技术理解</span><p>Vue、Next.js、TypeScript、Node.js、浏览器扩展、微信小程序、大模型接口与 Git</p><p>能独立制作验证版本，并结合实现限制调整产品方案。</p></article></div></section>
 
-      <section class="contact shell"><p class="kicker">联系方式</p><h2>正在寻找 AI 产品经理<br>或产品助理岗位。</h2><div><a class="button lime" href="mailto:duyufei000@126.com">duyufei000@126.com</a><button class="copy-email" type="button" @click="copyEmail">{{ copied ? '邮箱已复制' : '复制邮箱' }}</button><a :href="asset('杜雨菲_AI产品助理_简历.pdf')" download>下载简历</a><a href="https://github.com/yuyuyyyyyyyyyyyy" target="_blank" rel="noreferrer">GitHub</a></div></section>
+      <section class="contact shell"><div class="folio"><span>04 / 04</span><span>CONTACT</span></div><p class="kicker">联系方式</p><h2>正在寻找 AI 产品经理<br>或产品助理岗位。</h2><div><a class="button lime" href="mailto:duyufei000@126.com">duyufei000@126.com</a><button class="copy-email" type="button" @click="copyEmail">{{ copied ? '邮箱已复制' : '复制邮箱' }}</button><a :href="asset('杜雨菲_AI产品助理_简历.pdf')" download>下载简历</a><a href="https://github.com/yuyuyyyyyyyyyyyy" target="_blank" rel="noreferrer">GitHub</a></div></section>
     </main>
     <footer class="footer shell"><span>© 2026 杜雨菲</span><span>AI 产品经理 / 产品助理作品集</span></footer>
   </div>
