@@ -1,4 +1,4 @@
-﻿<script setup>
+<script setup>
 import { ref, nextTick } from 'vue'
 
 const openProject = ref(null)
@@ -124,7 +124,7 @@ const process = [
   <div class="site-shell">
     <nav class="nav shell">
       <a class="brand" href="#top"><span>DYF</span><b>杜雨菲的产品作品集</b></a>
-      <div class="nav-links"><a href="#work">代表项目</a><a href="#process">工作方式</a><a href="#education">教育与技能</a><a class="nav-cta" href="mailto:duyufei000@126.com">联系我</a></div>
+      <div class="nav-links"><a href="#work">代表项目</a><a href="#agent">自用工具</a><a href="#process">工作方式</a><a href="#education">教育与技能</a><a class="nav-cta" href="mailto:duyufei000@126.com">联系我</a></div>
     </nav>
 
     <main id="top">
@@ -171,6 +171,33 @@ const process = [
             <div class="detail-grid"><details v-for="(section, index) in project.detail" :key="section[0]" :open="index === 0"><summary><span>{{ section[0] }}</span><i>展开</i></summary><p>{{ section[1] }}</p></details></div>
             <div class="detail-links"><a v-if="project.id === 'plugin'" class="button primary" href="https://microsoftedge.microsoft.com/addons/detail/aidmlojjjgebhogkffbebnfpjhfbpfmm" target="_blank" rel="noreferrer">在 Edge 商店查看</a><a v-if="project.id === 'prism'" class="button primary" href="https://deluxe-cheesecake-203e56.netlify.app/" target="_blank" rel="noreferrer">在线体验多棱镜</a><a v-if="project.id === 'mudanting'" class="button primary" href="https://yuyuyyyyyyyyyyyy.github.io/mudanting-jingmeng/" target="_blank" rel="noreferrer">在线体验《牡丹亭》</a><a v-if="project.id === 'ops'" class="button primary" href="#ops-qr">扫描小程序码体验</a><a class="button" :href="`#demo-${project.id}`">查看项目画面</a></div>
           </section>
+        </article>
+      </section>
+
+      <section id="agent" class="section shell lab-section">
+        <header class="section-head"><div><p class="kicker">自用工具 · 仍在迭代</p><h2>把重复判断<br>交给工具。</h2></div><p>这一块不是对外产品：它是我为了把求职里最重复的一段做成能跑、能停、能被核验的工具。代码没有公开，也没有用户数据。</p></header>
+        <article class="home-project supporting">
+          <div class="card-copy">
+            <div class="card-top"><span>05</span><p><i></i>本地运行 · 代码未公开</p></div>
+            <h3 class="project-name">求职 Agent</h3>
+            <p class="project-subtitle">从岗位阅读到发送核验的自动化工作流</p>
+            <p class="project-intro">把每天重复的岗位阅读、硬门槛判断、招呼语生成和桌面操作串成一条流水线，再用去重、状态记录和发送前校验约束它。目标不是“多发”，而是“错的时候能停下来”。</p>
+            <div class="iteration"><b>核心取舍：先有安全边界，再谈效率</b><p>第一版只追求跑通，出现过“发送结果不确定却继续往下发”的情况。后来把两种情况分开：结果未知一律停机并禁止重发，只有确定没发出的局部故障才允许跳过当前岗位；连续失败阈值、否定句识别、发送前身份校验都补了回归测试。</p></div>
+            <div class="pm-evidence"><div><b>要解决的问题</b><p>岗位阅读与初步判断高度重复，人工做既慢，也容易漏掉硬门槛。</p></div><div><b>最初假设</b><p>只要模型判断够准，其余交给自动重试就可以。</p></div><div><b>关键取舍</b><p>身份不符、平台风险提示、发送结果未知时一律停机；不为提高数量放宽风控边界。</p></div><div><b>当前状态</b><p>已在真实账号上按单轮上限运行并逐条核验记录；代码未公开，也不宣称效率提升比例。</p></div></div>
+            <div class="card-tags"><span>Python</span><span>UI Automation</span><span>SQLite</span><span>大模型 API</span><span>文本控制台</span><span>本地自用</span></div>
+          </div>
+          <div class="card-media mechanism-media">
+            <div class="video-head"><div><span>运行输出 · 岗位信息已脱敏</span><b>出错时停下来，而不是继续发</b></div><small>本地自用</small></div>
+            <pre class="agent-log">$ python browse_and_apply.py --limit 5
+OPEN:AI应用开发工程师
+SKIP:DETAIL_JOB_MISMATCH 卡片与详情不是同一岗位 → <b>本岗位不发送</b>
+LOCAL_SKIP:方向偏离：销售类岗位
+SKIP:SEND_PREFLIGHT_FAILED（第 1 次）本岗位未发送，继续下一个岗位
+REUSE_JD_DECISION：同一份 JD 已判断，本次无需调用模型
+STOP:SEND_AMBIGUOUS：发送结果待核实；<b>整轮停止，禁止自动重发</b>
+DONE: reviewed=12 verified_sent=3</pre>
+            <p class="agent-note">以上是真实运行日志的行格式，岗位名、公司名与人名已替换为通用描述。</p>
+          </div>
         </article>
       </section>
 
