@@ -20,6 +20,7 @@ const toggleProject = async (id) => {
 const projects = [
   {
     no: '02', id: 'plugin', featured: true, flip: true,
+    stack: '浏览器扩展 · 内容脚本 · 大模型 API',
     title: 'AI Job Radar｜招聘网页内的岗位决策助手',
     status: '已上架 Edge 商店',
     intro: '帮助求职者在浏览招聘岗位时，快速判断硬门槛、职责匹配和是否值得沟通，并根据简历证据生成招呼语。',
@@ -43,6 +44,7 @@ const projects = [
   },
   {
     no: '03', id: 'prism',
+    stack: 'Next.js · TypeScript · 结构化输出约束',
     title: '多棱镜｜人生事件多角度解释工具',
     status: '已上线 · 可在线体验',
     intro: '针对用户容易陷入单一归因的问题，将一件困扰人的事情拆分为“事实、不同解释、下一步验证”，帮助用户区分已经发生的事实和暂时无法确认的推测。',
@@ -66,6 +68,7 @@ const projects = [
   },
   {
     no: '04', id: 'mudanting', flip: true,
+    stack: 'React · TypeScript · 检索式阅读',
     title: '牡丹亭｜由文字重新展开的互动阅读',
     status: '已上线 · 可在线体验',
     intro: '围绕《牡丹亭·惊梦·皂罗袍》制作互动阅读场景，让“原来—姹紫嫣红—似这般—断井颓垣”不只被解释，也通过层层展开的交互、节奏与视觉被感受。',
@@ -87,6 +90,7 @@ const projects = [
   },
   {
     no: '05', id: 'ops', supporting: true,
+    stack: '微信小程序 · 状态模型 · 分支逻辑',
     title: '探索运营｜内容平台运营策略推演小程序',
     status: '微信小程序已上线',
     intro: '将平台限流、热点变化、公众情绪、内容管控和商业化压力等抽象机制，转化为可以体验和决策的章节式微信小程序。',
@@ -149,7 +153,6 @@ const process = [
             <p class="project-subtitle">从岗位阅读到发送核验的自动化工作流</p>
             <p class="project-intro">把每天重复的岗位阅读、硬门槛判断、招呼语生成和桌面操作串成一条流水线，再用去重、状态记录和发送前校验约束它。目标不是“多发”，而是“错的时候能停下来”。</p>
             <div class="iteration"><b>核心取舍：先有安全边界，再谈效率</b><p>第一版只追求跑通，出现过“发送结果不确定却继续往下发”的情况。后来把两种情况分开：结果未知一律停机并禁止重发，只有确定没发出的局部故障才允许跳过当前岗位；连续失败阈值、否定句识别、发送前身份校验都补了回归测试。</p></div>
-            <div class="pm-evidence"><div><b>要解决的问题</b><p>岗位阅读与初步判断高度重复，人工做既慢，也容易漏掉硬门槛。</p></div><div><b>最初假设</b><p>只要模型判断够准，其余交给自动重试就可以。</p></div><div><b>关键取舍</b><p>身份不符、平台风险提示、发送结果未知时一律停机；不为提高数量放宽风控边界。</p></div><div><b>当前状态</b><p>已在真实账号上按单轮上限运行并逐条核验记录；代码未公开，也不宣称效率提升比例。</p></div></div>
             <div class="card-tags"><span>Python</span><span>UI Automation</span><span>SQLite</span><span>大模型 API</span><span>文本控制台</span><span>规则与风控边界</span></div>
           </div>
           <div class="card-media mechanism-media">
@@ -163,7 +166,10 @@ REUSE_JD_DECISION：同一份 JD 已判断，本次无需调用模型
 STOP:SEND_AMBIGUOUS：发送结果待核实；<b>整轮停止，禁止自动重发</b>
 DONE: reviewed=12 verified_sent=3</pre>
             <p class="agent-note">以上是真实运行日志的行格式，岗位名、公司名与人名已替换为通用描述。</p>
+            <div class="card-info"><span>角色</span><b>独立完成：需求、规则与实现</b><span>状态</span><b>本地自用 · 仍在迭代</b><span>技术</span><b>Python · UI Automation · SQLite · 大模型 API</b><span>用户任务</span><b>减少重复的岗位阅读与初步判断</b></div>
           </div>
+
+          <div class="row-evidence"><div><b>最初假设</b><p>只要模型判断够准，其余交给自动重试就可以。</p></div><div><b>关键取舍</b><p>身份不符、平台风险提示、发送结果未知时一律停机；不为提高数量放宽风控边界。</p></div><div><b>当前验证</b><p>已在真实账号上按单轮上限运行并逐条核验记录；代码未公开，也不宣称效率提升比例。</p></div></div>
         </article>
 
         <article v-for="project in projects" :key="project.id" :id="project.id" class="home-project" :class="{ featured: project.featured, supporting: project.supporting, flip: project.flip }">
@@ -172,13 +178,6 @@ DONE: reviewed=12 verified_sent=3</pre>
             <h3 class="project-name">{{ project.title.split('｜')[0] }}</h3><p class="project-subtitle">{{ project.title.split('｜')[1] }}</p>
             <p class="project-intro">{{ project.intro }}</p>
             <div class="iteration"><b>核心产品迭代</b><p>{{ project.iteration }}</p></div>
-            <div class="pm-evidence"><div><b>用户任务</b><p>{{ project.evidence.task }}</p></div><div><b>最初假设</b><p>{{ project.evidence.assumption }}</p></div><div><b>关键取舍</b><p>{{ project.evidence.tradeoff }}</p></div><div><b>当前验证</b><p>{{ project.evidence.validation }}</p></div></div>
-            <div v-if="project.featured" class="radar-switch" aria-label="AI Job Radar 产品迭代对比">
-              <div class="switch-tabs" role="tablist"><button type="button" :class="{ active: radarView === 'before' }" @click="radarView = 'before'">第一版方案</button><button type="button" :class="{ active: radarView === 'after' }" @click="radarView = 'after'">重构后方案</button></div>
-              <div v-if="radarView === 'before'" class="flow-panel"><b>第一版</b><p>浏览招聘网站 → 搬入 Radar → 等待分析 → 返回招聘网站 → 手动沟通</p><span>问题：增加页面切换和岗位维护成本。</span></div>
-              <div v-else class="flow-panel improved"><b>重构后</b><p>浏览招聘网站 → 页面内获得判断 → 决定是否沟通</p><span>结果：不改变用户原有使用场景。</span></div>
-              <strong class="decision-proof">我不是因为第一版无法实现而改变方案，而是因为它已经能运行，却没有真正减少用户成本。</strong>
-            </div>
             <div class="card-tags"><span v-for="tag in project.tags" :key="tag">{{ tag }}</span></div>
             <div class="card-actions"><button class="button primary" type="button" @click="toggleProject(project.id)" :aria-expanded="openProject === project.id">{{ openProject === project.id ? '收起项目复盘' : project.primaryLabel }}</button><a class="button" :href="project.secondaryHref" :target="project.external ? '_blank' : null" :rel="project.external ? 'noreferrer' : null">{{ project.secondaryLabel }}</a><a v-if="project.id === 'plugin'" class="button store-button" href="https://microsoftedge.microsoft.com/addons/detail/aidmlojjjgebhogkffbebnfpjhfbpfmm" target="_blank" rel="noreferrer">下载 Edge 插件</a></div>
           </div>
@@ -188,7 +187,16 @@ DONE: reviewed=12 verified_sent=3</pre>
             <div v-else-if="project.id === 'prism'" class="prism-mechanism"><span class="mechanism-label">输入事件</span><h4>“他没有回复我。”</h4><div class="mechanism-tabs"><button :class="{active: prismView === 'fact'}" @click="prismView = 'fact'">事实</button><button :class="{active: prismView === 'possibility'}" @click="prismView = 'possibility'">不同解释</button><button :class="{active: prismView === 'verify'}" @click="prismView = 'verify'">下一步验证</button></div><p v-if="prismView === 'fact'"><b>可以确认：</b>消息已发出，目前没有收到回复。</p><p v-else-if="prismView === 'possibility'"><b>还有可能：</b>正在忙、没有看到、不知道如何回应，或暂时不想回复。</p><p v-else><b>可以验证：</b>等待一个合理时间，再通过其他行为观察关系，而不是立即认定原因。</p></div>
             <a v-else-if="project.id === 'mudanting'" class="mudanting-mechanism" :href="project.secondaryHref" target="_blank" rel="noreferrer"><img :src="asset(project.poster)" alt="《牡丹亭·惊梦》互动阅读中的游园画卷"><div><span class="mechanism-label">皂罗袍 · 互动阅读</span><h4>原来姹紫嫣红开遍，<br>似这般都付与断井颓垣。</h4><p>点击进入一场由文字重新展开的阅读</p></div></a>
             <div v-else class="ops-mechanism"><span class="mechanism-label">第 03 章 · 流量波动</span><h4>热点突然出现，你会怎么选？</h4><div class="ops-stats"><p><b>关注度</b><i>{{ opsChoice === 'trend' ? '+24' : '+8' }}</i></p><p><b>信任度</b><i>{{ opsChoice === 'trend' ? '-6' : '+12' }}</i></p><p><b>平台风险</b><i>{{ opsChoice === 'trend' ? '上升' : '稳定' }}</i></p></div><div class="ops-actions"><button :class="{active: opsChoice === 'trend'}" @click="opsChoice = 'trend'">立即追热点</button><button :class="{active: opsChoice === 'steady'}" @click="opsChoice = 'steady'">坚持垂直内容</button></div><div id="ops-qr" class="qr-entry"><img :src="asset(project.qr)" alt="探索运营微信小程序码"><div><b>微信扫码体验</b><p>小程序目前在线。</p></div></div></div>
+            <div v-if="project.featured" class="radar-switch" aria-label="AI Job Radar 产品迭代对比">
+              <div class="switch-tabs" role="tablist"><button type="button" :class="{ active: radarView === 'before' }" @click="radarView = 'before'">第一版方案</button><button type="button" :class="{ active: radarView === 'after' }" @click="radarView = 'after'">重构后方案</button></div>
+              <div v-if="radarView === 'before'" class="flow-panel"><b>第一版</b><p>浏览招聘网站 → 搬入 Radar → 等待分析 → 返回招聘网站 → 手动沟通</p><span>问题：增加页面切换和岗位维护成本。</span></div>
+              <div v-else class="flow-panel improved"><b>重构后</b><p>浏览招聘网站 → 页面内获得判断 → 决定是否沟通</p><span>结果：不改变用户原有使用场景。</span></div>
+              <strong class="decision-proof">我不是因为第一版无法实现而改变方案，而是因为它已经能运行，却没有真正减少用户成本。</strong>
+            </div>
+            <div class="card-info"><span>角色</span><b>独立完成：产品判断、交互与实现</b><span>状态</span><b>{{ project.status }}</b><span>技术</span><b>{{ project.stack }}</b><span>用户任务</span><b>{{ project.evidence.task }}</b></div>
           </div>
+
+          <div class="row-evidence"><div><b>最初假设</b><p>{{ project.evidence.assumption }}</p></div><div><b>关键取舍</b><p>{{ project.evidence.tradeoff }}</p></div><div><b>当前验证</b><p>{{ project.evidence.validation }}</p></div></div>
 
           <section v-if="openProject === project.id" :id="`detail-${project.id}`" class="case-detail">
             <header><p class="kicker">项目详情</p><h3 class="project-name">{{ project.title.split('｜')[0] }}</h3><p class="project-subtitle">{{ project.title.split('｜')[1] }}</p></header>
