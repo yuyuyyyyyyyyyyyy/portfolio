@@ -1,4 +1,4 @@
-﻿import { mkdir, writeFile, readFile, readdir, rename, copyFile, rm } from 'node:fs/promises'
+import { mkdir, writeFile, readFile, readdir, rename, copyFile } from 'node:fs/promises'
 
 const dist = new URL('../dist/', import.meta.url)
 const assetsDir = new URL('../dist/assets/', import.meta.url)
@@ -12,8 +12,9 @@ for (const name of await readdir(assetsDir)) {
 entries['/photo.jpg'] = ['image/jpeg', (await readFile(new URL('../dist/photo.jpg', import.meta.url))).toString('base64'), true]
 entries['/og.jpg'] = ['image/jpeg', (await readFile(new URL('../dist/og.jpg', import.meta.url))).toString('base64'), true]
 entries['/' + encodeURI('杜雨菲_AI产品助理_简历.pdf')] = ['application/pdf', (await readFile(new URL('../dist/杜雨菲_AI产品助理_简历.pdf', import.meta.url))).toString('base64'), true]
+entries['/' + encodeURI('杜雨菲_Agent应用开发_简历.pdf')] = ['application/pdf', (await readFile(new URL('../dist/杜雨菲_Agent应用开发_简历.pdf', import.meta.url))).toString('base64'), true]
 for (const name of await readdir(new URL('../dist/media/', import.meta.url))) {
-  const type = name.endsWith('.mp4') ? 'video/mp4' : 'image/jpeg'
+  const type = name.endsWith('.mp4') ? 'video/mp4' : name.endsWith('.webp') ? 'image/webp' : 'image/jpeg'
   entries[`/media/${name}`] = [type, (await readFile(new URL(`../dist/media/${name}`, import.meta.url))).toString('base64'), true]
 }
 const worker = `const files = ${JSON.stringify(entries)}
@@ -36,13 +37,9 @@ await writeFile(new URL('../dist/server/index.js', import.meta.url), worker)
 await mkdir(new URL('../dist/static/', import.meta.url), { recursive: true })
 await rename(new URL('../dist/index.html', import.meta.url), new URL('../dist/static/index.html', import.meta.url))
 await rename(new URL('../dist/assets', import.meta.url), new URL('../dist/static/assets', import.meta.url))
+await rename(new URL('../dist/media', import.meta.url), new URL('../dist/static/media', import.meta.url))
 await rename(new URL('../dist/photo.jpg', import.meta.url), new URL('../dist/static/photo.jpg', import.meta.url))
+await rename(new URL('../dist/杜雨菲_Agent应用开发_简历.pdf', import.meta.url), new URL('../dist/static/杜雨菲_Agent应用开发_简历.pdf', import.meta.url))
 await rename(new URL('../dist/PLACEHOLDERS.md', import.meta.url), new URL('../dist/static/PLACEHOLDERS.md', import.meta.url))
 await mkdir(new URL('../dist/.openai/', import.meta.url), { recursive: true })
 await copyFile(new URL('../.openai/hosting.json', import.meta.url), new URL('../dist/.openai/hosting.json', import.meta.url))
-
-
-
-
-await rm(new URL('../dist/media/', import.meta.url), { recursive: true, force: true })
-
