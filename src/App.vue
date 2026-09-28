@@ -1,6 +1,6 @@
 ﻿<script setup>
 import { ref, nextTick, onMounted, onBeforeUnmount } from 'vue'
-import { copyContact, motionBehavior } from './interactions'
+import { copyContact, motionBehavior, shouldShowIntro } from './interactions'
 
 const openProject = ref(null)
 const radarView = ref('before')
@@ -9,9 +9,80 @@ const opsChoice = ref('steady')
 const arcadeStep = ref(1)
 const copied = ref('')
 const videoEnabled = ref({})
+const introKey = 'portfolio-intro-v1'
+const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+const introSeen = () => {
+  try { return window.sessionStorage.getItem(introKey) === '1' } catch { return false }
+}
+const introVisible = ref(shouldShowIntro({ seen: introSeen(), reducedMotion: reducedMotion() }))
+const introReady = ref(false)
 let revealObserver
 let copyTimer
-const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+let introTimer
+let stopStarfield
+const mountStarfield = () => {
+  const canvas = document.querySelector('.sky-grain')
+  if (!canvas) return () => {}
+  const ctx = canvas.getContext('2d')
+  if (!ctx) return () => {}
+  const reduced = reducedMotion()
+  let width = 0
+  let height = 0
+  let stars = []
+  let frame
+  const random = (seed) => {
+    let value = seed >>> 0
+    return () => { value = (1664525 * value + 1013904223) >>> 0; return value / 4294967296 }
+  }
+  const resize = () => {
+    width = window.innerWidth
+    height = window.innerHeight
+    const ratio = Math.min(window.devicePixelRatio || 1, 2)
+    canvas.width = Math.round(width * ratio)
+    canvas.height = Math.round(height * ratio)
+    canvas.style.width = `${width}px`
+    canvas.style.height = `${height}px`
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0)
+    const next = random(28417 + width * 7 + height)
+    stars = Array.from({ length: Math.max(10, Math.round(width * height / 24000)) }, () => ({
+      x: next() * width,
+      y: next() * height,
+      radius: .45 + next() * .65,
+      base: .12 + next() * .23,
+      pulse: next() < .22 ? .14 + next() * .22 : .02 + next() * .05,
+      phase: next() * Math.PI * 2,
+      speed: .0005 + next() * .0011
+    }))
+  }
+  const draw = (time = 0) => {
+    ctx.clearRect(0, 0, width, height)
+    for (const star of stars) {
+      const shimmer = reduced ? 0 : (Math.sin(time * star.speed + star.phase) + 1) / 2
+      ctx.fillStyle = `rgba(142,190,255,${star.base + star.pulse * shimmer})`
+      ctx.beginPath()
+      ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2)
+      ctx.fill()
+    }
+    if (!reduced) frame = window.requestAnimationFrame(draw)
+  }
+  const onResize = () => { resize(); if (reduced) draw() }
+  resize()
+  draw()
+  window.addEventListener('resize', onResize)
+  return () => { window.removeEventListener('resize', onResize); window.cancelAnimationFrame(frame) }
+}
+const startIntro = () => {
+  if (!introVisible.value || introReady.value) return
+  introReady.value = true
+  introTimer = window.setTimeout(closeIntro, 3400)
+}
+const closeIntro = (skipped = false) => {
+  if (!introVisible.value) return
+  introVisible.value = false
+  clearTimeout(introTimer)
+  try { window.sessionStorage.setItem(introKey, '1') } catch { /* private storage may be unavailable */ }
+  if (skipped) nextTick(() => document.querySelector('.hero .button')?.focus({ preventScroll: true }))
+}
 const copyEmail = async () => {
   copied.value = await copyContact(navigator.clipboard)
   clearTimeout(copyTimer)
@@ -28,6 +99,9 @@ const playVideo = async (id) => {
   document.querySelector(`#demo-${id} video, #detail-${id} video`)?.play().catch(() => {})
 }
 onMounted(() => {
+  stopStarfield = mountStarfield()
+  const introImage = document.querySelector('.boot-intro__portrait img')
+  if (introImage?.complete && introImage.naturalWidth) startIntro()
   if (reducedMotion() || !('IntersectionObserver' in window)) return
   revealObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -39,7 +113,7 @@ onMounted(() => {
   }, { threshold: 0.08 })
   document.querySelectorAll('.home-project, .section-head, .education-three article, .process-grid article').forEach(el => revealObserver.observe(el))
 })
-onBeforeUnmount(() => { revealObserver?.disconnect(); clearTimeout(copyTimer) })
+onBeforeUnmount(() => { revealObserver?.disconnect(); stopStarfield?.(); clearTimeout(copyTimer); clearTimeout(introTimer) })
 
 const projects = [
   {
@@ -133,7 +207,16 @@ const process = [
 </script>
 
 <template>
-  <div class="site-shell">
+  <div v-if="introVisible" class="boot-intro" :class="{ 'is-ready': introReady }" role="dialog" aria-modal="true" aria-label="杜雨菲的赛博朋克开场">
+    <div class="boot-intro__frame">
+      <div class="boot-intro__portrait"><img :src="asset('media/blue-digital-silhouette-v2.webp')" alt="蓝色数字点阵女性侧影插画" width="1672" height="940" fetchpriority="high" @load="startIntro" @error="closeIntro"></div>
+      <div class="boot-intro__copy"><span>SIGNAL / DU YUFEI</span><h2>杜雨菲</h2><p>AI 应用 / Agent 开发工程师</p><small>保持好奇，把想法做出来。</small></div>
+      <div class="boot-intro__progress" aria-hidden="true"></div>
+    </div>
+    <button type="button" class="boot-intro__skip" @click="closeIntro(true)">跳过开场 ↗</button>
+  </div>
+  <div class="site-shell" :inert="introVisible">
+    <canvas class="sky-grain" aria-hidden="true"></canvas>
     <a class="skip-link" href="#work">跳到项目内容</a>
     <nav class="nav shell">
       <a class="brand" href="#top"><span>雨<span class="brand-dot">.</span></span><b>杜雨菲 <small>AI APPLICATIONS & AGENTS</small></b></a>
@@ -203,7 +286,7 @@ const process = [
 
       <section id="process" class="section process-section"><div class="shell"><header class="section-head inverse"><div><p class="kicker">HOW I WORK</p><h2>我如何工作。</h2></div></header><div class="process-grid"><article v-for="item in process" :key="item[0]" :class="{ active: arcadeStep === Number(item[0]) }"><b>{{ item[0] }}</b><h3>{{ item[1] }}</h3><p>{{ item[2] }}</p></article></div></div></section>
 
-      <section id="education" class="shell education-compact"><p class="kicker">ABOUT ME</p><div class="education-three"><article><span>教育背景</span><h3>计算机科学与技术本科</h3><p>长江师范学院｜山东科技大学联合培养</p><p>2025 届 · 专业排名第 4 · CET-4</p></article><article><span>项目实践</span><h3>从接口到可用流程</h3><p>独立实现本地 Agent、浏览器扩展和 AI 应用；关注输入校验、状态记录、失败处理与用户操作路径。</p></article><article><span>项目中使用的技术</span><h3>AI 应用开发</h3><p>Python、TypeScript、Vue、React / Next.js、浏览器扩展、大模型 API、SQLite 与 Git。</p><p>结合实现限制调整方案，也明确尚未验证的边界。</p></article></div></section>
+      <section id="education" class="shell education-compact"><div class="education-heading"><div><p class="kicker">ABOUT ME</p><h2>关于我</h2><p>杜雨菲 · AI 应用 / Agent 开发工程师</p></div><figure class="profile-photo"><img :src="asset('photo.jpg')" alt="杜雨菲本人证件照" width="320" height="400" loading="lazy" decoding="async"><figcaption>杜雨菲 / 本人照片</figcaption></figure></div><div class="education-three"><article><span>教育背景</span><h3>计算机科学与技术本科</h3><p>长江师范学院｜山东科技大学联合培养</p><p>2025 届 · 专业排名第 4 · CET-4</p></article><article><span>项目实践</span><h3>从接口到可用流程</h3><p>独立实现本地 Agent、浏览器扩展和 AI 应用；关注输入校验、状态记录、失败处理与用户操作路径。</p></article><article><span>项目中使用的技术</span><h3>AI 应用开发</h3><p>Python、TypeScript、Vue、React / Next.js、浏览器扩展、大模型 API、SQLite 与 Git。</p><p>结合实现限制调整方案，也明确尚未验证的边界。</p></article></div></section>
 
       <section class="contact shell"><p class="kicker">LET’S BUILD SOMETHING USEFUL</p><h2>联系我<span>↗</span></h2><p>正在寻找 AI 应用 / Agent 开发工程师岗位。</p><div><a class="button lime" href="mailto:duyufei000@126.com">duyufei000@126.com ↗</a><button class="copy-email" type="button" @click="copyEmail">复制邮箱</button><a :href="asset('杜雨菲_Agent应用开发_简历.pdf')" download>下载简历 ↓</a><a href="https://github.com/yuyuyyyyyyyyyyyy" target="_blank" rel="noreferrer">GitHub ↗</a></div><p class="copy-feedback" role="status">{{ copied }}</p></section>
     </main>

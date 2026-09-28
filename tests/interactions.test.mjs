@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { copyContact, motionBehavior } from '../src/interactions.js'
+import { copyContact, motionBehavior, shouldShowIntro } from '../src/interactions.js'
 
 test('copy reports success only after the clipboard accepts the email', async () => {
   let written = ''
@@ -14,4 +14,10 @@ test('unavailable or denied clipboard gives an actionable fallback', async () =>
 test('reduced motion disables animated scrolling', () => {
   assert.equal(motionBehavior(true), 'auto')
   assert.equal(motionBehavior(false), 'smooth')
+})
+
+test('intro plays once per session and respects reduced motion', () => {
+  assert.equal(shouldShowIntro({ seen: false, reducedMotion: false }), true)
+  assert.equal(shouldShowIntro({ seen: true, reducedMotion: false }), false)
+  assert.equal(shouldShowIntro({ seen: false, reducedMotion: true }), false)
 })

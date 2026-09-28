@@ -1,4 +1,5 @@
 export const motionBehavior = reduced => reduced ? 'auto' : 'smooth'
+export const shouldShowIntro = ({ seen, reducedMotion }) => !seen && !reducedMotion
 
 export async function copyContact(clipboard) {
   try {
