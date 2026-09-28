@@ -228,7 +228,7 @@ const process = [
         <div class="hero-copy">
           <p class="eyebrow"><i></i>开放工作机会 <span>武汉 / 北京</span></p>
           <p class="hero-index">你好，我是杜雨菲 / AI 应用开发</p>
-          <h1>AI 应用 /<br><em>Agent 开发工程师</em></h1>
+          <h1><span class="hero-title-line">AI 应用 /</span><br><em class="hero-title-line">Agent 开发工程师</em></h1>
           <p class="lead">保持好奇，把想法做出来。</p>
           <div class="actions"><a class="button primary" href="#work">探索我的作品 <span>↘</span></a><a class="button" :href="asset('杜雨菲_Agent应用开发_简历.pdf')" download>下载简历 ↗</a></div>
           <p class="hero-footnote">Python <span>·</span> 大模型 API <span>·</span> UI Automation <span>·</span> SQLite</p>
