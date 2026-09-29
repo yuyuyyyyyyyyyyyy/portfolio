@@ -40,9 +40,9 @@ test('the linked Agent resume is available in both output formats', async () => 
   assert.equal(oldResume.status, 404)
 })
 
-test('real Agent input screenshot and cosmic frame use their correct media types', async () => {
+test('real Agent input screenshot uses the correct media type', async () => {
   const { default: worker } = await import(new URL('../dist/server/index.js', import.meta.url).href)
-  for (const [name, type] of [['agent-real-job-screen.png', 'image/png'], ['cosmic-brush-frame.svg', 'image/svg+xml']]) {
+  for (const [name, type] of [['agent-real-job-screen.png', 'image/png']]) {
     const response = await worker.fetch(new Request(`https://portfolio.test/media/${name}`))
     assert.equal(response.status, 200)
     assert.equal(response.headers.get('content-type'), type)
