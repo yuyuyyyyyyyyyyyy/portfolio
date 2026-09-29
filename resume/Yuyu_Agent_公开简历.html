@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Yuyu｜AI 应用 / Agent 开发工程师｜公开简历</title>
+<style>
+@page{size:A4;margin:13mm 15mm 12mm}
+*{box-sizing:border-box}body{margin:0;font:10pt/1.53 "Microsoft YaHei","Noto Sans CJK SC",sans-serif;color:#182339}a{color:#274f91;text-decoration:none}
+header{display:flex;justify-content:space-between;align-items:end;padding-bottom:10px;border-bottom:2px solid #172e56}h1{margin:0;font-size:24pt;line-height:1.1;letter-spacing:.02em}.role{margin:4px 0 0;color:#31558c;font-size:11pt;font-weight:700}.contact{text-align:right;font-size:8.4pt;line-height:1.6}
+.summary{display:flex;gap:12px;margin:11px 0 13px}.metric{flex:1;padding:8px 10px;background:#eef3f9;border-left:2px solid #416ca6}.metric b{display:block;font-size:13pt;color:#173a70}.metric span{color:#52647f;font-size:8pt}
+h2{font-size:10.5pt;letter-spacing:.08em;color:#264b83;margin:15px 0 6px;border-bottom:1px solid #d7e0ec;padding-bottom:3px}.lead{font-size:9.1pt;margin:0;color:#354560}.project{margin:10px 0 0;break-inside:avoid}.project h3{font-size:10pt;margin:0}.project .meta{font-size:8.1pt;color:#60718b;margin:2px 0 4px}.project ul{margin:0;padding-left:15px}.project li{margin:3px 0}.project strong{color:#1e426f}.small{font-size:8.6pt}.footer{display:flex;justify-content:space-between;gap:20px}.footer>div{flex:1}.footer p{margin:3px 0}
+</style>
+</head>
+<body>
+<header><div><h1>Yuyu</h1><p class="role">AI 应用 / Agent 开发工程师</p></div><div class="contact"><a href="mailto:duyufei000@126.com">duyufei000@126.com</a><br><a href="https://yuyuyyyyyyyyyyyy.github.io/portfolio/">作品集</a> · <a href="https://github.com/yuyuyyyyyyyyyyyy">GitHub</a> · <a href="https://microsoftedge.microsoft.com/addons/detail/aidmlojjjgebhogkffbebnfpjhfbpfmm">Edge 商店</a></div></header>
+<div class="summary"><div class="metric"><b>2,400+</b><span>去重岗位记录 · 本地求职 Agent</span></div><div class="metric"><b>Edge 上架</b><span>AI Job Radar 浏览器扩展</span></div><div class="metric"><b>端到端实现</b><span>输入读取、模型判断、执行核验、失败恢复</span></div></div>
+<p class="lead">计算机科学与技术本科。独立实现 Windows 桌面 Agent、浏览器扩展及在线 AI 应用；重点解决模型输出不可靠、页面状态错位和重复执行风险。</p>
+<h2>代表项目</h2>
+<section class="project"><h3>01 · Windows 桌面求职 Agent｜独立开发</h3><p class="meta">Python · 大模型 HTTP API · JSON 校验 · Windows UI Automation · SQLite</p><ul><li><strong>处理规模与职责：</strong>本地数据库保存 2,400+ 条按岗位身份去重的处理记录；把岗位读取、门槛检查、模型分级、项目证据匹配、桌面执行与结果回读拆成可检查的步骤。</li><li><strong>判断可信度：</strong>模型返回结构化 JSON，程序校验字段与硬门槛；将“明确冲突”“待补充信息”“项目证据”分开保存，匹配不足的岗位转人工判断。</li><li><strong>失败恢复：</strong>核对岗位卡片、详情与聊天对象；读取超时保留检查点，页面错位立即停机。发送后回读会话，仅在观察到对应消息时记为已发送；不确定状态不自动重试，避免重复沟通。</li></ul></section>
+<section class="project"><h3>02 · AI Job Radar｜Edge 商店已上架</h3><p class="meta">TypeScript · React · Manifest V3 · 大模型 API · 本地 OCR</p><ul><li><strong>从搬运岗位改为就地判断：</strong>第一版独立面板要求用户来回复制 JD；改成招聘网页侧边栏，读取当前完整 JD，与简历证据逐项对照，投递仍由用户决定。</li><li><strong>证据约束：</strong>扫描版 PDF 在本地 OCR，提取经历由用户确认；模型判断区分硬条件冲突、未知和偏好，并校验 JD 与简历引文。证据不足时下调建议等级，避免关键词相同就误判匹配。</li></ul></section>
+<section class="project"><h3>03 · 牡丹亭 · 惊梦｜已上线</h3><p class="meta">React · TypeScript · MCP · AI 检索</p><ul><li><strong>限制模型越界：</strong>校对原文由服务端签发 evidenceId；从 25 条人工审核的文本关系中检索后文回声，模型只做候选排序。找不到可靠证据时返回不发言状态，不编造原文。</li></ul></section>
+<div class="footer"><div><h2>教育</h2><p class="small"><strong>计算机科学与技术 · 本科</strong><br>长江师范学院｜山东科技大学联合培养<br>2025 届 · 专业排名第 4 · CET-4</p></div><div><h2>技术</h2><p class="small">Python、TypeScript、React、Vue、Next.js、SQLite、Git、浏览器扩展、Windows UI Automation；大模型 API、结构化输出、OCR 与人机协作边界。</p></div></div>
+</body>
+</html>

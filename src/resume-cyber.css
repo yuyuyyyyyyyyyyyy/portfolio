@@ -306,14 +306,14 @@ body{
 }
 .hero h1{
   background:none;
-  color:#dc93a6;
-  -webkit-text-fill-color:#dc93a6;
+  color:#d085ad;
+  -webkit-text-fill-color:#d085ad;
   text-shadow:none;
   filter:none;
 }
 .hero h1 .hero-title-line{
-  color:#dc93a6;
-  -webkit-text-fill-color:#dc93a6;
+  color:#d085ad;
+  -webkit-text-fill-color:#d085ad;
   text-shadow:-2px 0 #d988a5ac,2px 0 #76cfe9ac;
   font-style:normal;
 }
@@ -356,12 +356,21 @@ body{
 .hero-note-grid>a:nth-of-type(1){border-color:#ad94d080;background:radial-gradient(ellipse 100% 70% at 50% -30%,#b991e426,transparent 85%),linear-gradient(145deg,#2a3057,#151e38 67%,#0b172c)}
 .hero-note-grid>.workflow-key[aria-pressed="true"]{border-color:#aebeed}
 .home-project::before{
-  content:"";position:absolute;inset:0;z-index:4;pointer-events:none;opacity:.11;
+  content:"";position:absolute;inset:0;z-index:4;pointer-events:none;opacity:.07;
   border-radius:inherit;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' seed='12' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='96' height='96' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E") repeat;
-  mix-blend-mode:soft-light;
+  background:url('../public/media/cosmic-brush-frame.svg') center/100% 100% no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' seed='12' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='96' height='96' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E") repeat;
+  mix-blend-mode:screen;
 }
-.home-project.featured::before{opacity:.11}
+.home-project.featured::before{opacity:.1}
+@supports(mask-composite:exclude){
+  .home-project::before{
+    padding:14px;
+    mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    mask-composite:exclude;
+    opacity:.46;
+  }
+  .home-project.featured::before{opacity:.58}
+}
 html{scrollbar-color:#6b8fbe #0b1525;scrollbar-width:thin}
 ::-webkit-scrollbar{width:10px;height:10px}
 ::-webkit-scrollbar-track{background:#0b1525;border-left:1px solid #2f4768}
@@ -383,3 +392,31 @@ html{scrollbar-color:#6b8fbe #0b1525;scrollbar-width:thin}
 }
 @media(max-width:900px){.hero{overflow:clip}.hero::after{display:none}}
 @media(min-width:901px){.hero::after{right:5%;transform:none}}
+
+/* Keep the compact arcade index; reserve painted texture for project borders. */
+.hero-note-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.hero-product{border-color:#5472a052;box-shadow:0 20px 38px #0009,0 0 25px #387ac31a}
+.hero-product::before{
+  inset:9px;
+  border:1px solid #7590bc38;
+  border-radius:15px 15px 23px 23px;
+  background:none;
+}
+.hero-index{font-size:14px;font-weight:500;letter-spacing:.025em;color:#aac0da}
+.hero .button.primary{clip-path:polygon(0 0,calc(100% - 8px) 0,100% 100%,8px 100%);border-radius:3px;padding-inline:19px}
+.hero .resume-link{display:inline-flex;align-items:center;min-height:48px;color:#adc8e9;font:12px var(--mono);letter-spacing:.02em;text-decoration:none;border-bottom:1px solid #6787bd;transition:color .2s,border-color .2s}
+.hero .resume-link:hover,.hero .resume-link:focus-visible{color:#f1d9e9;border-color:#d085ad}
+.discipline-strip>span:last-child{display:inline}
+.agent-real-screen img{object-fit:cover;object-position:center 36%}
+.agent-real-screen a{display:block;overflow:hidden}
+.agent-real-screen a:focus-visible{outline:2px solid #9bb9f0;outline-offset:-3px}
+.profile-handle{display:flex;flex-direction:column;gap:5px;align-items:flex-end;color:#b8cbea;text-decoration:none}
+.profile-handle span{font:10px var(--mono);letter-spacing:.18em;color:#8eaae0}
+.profile-handle b{font:600 14px var(--mono);border-bottom:1px solid #4e6ca3;padding-bottom:5px}
+.profile-handle:hover b{color:#e1bfdf;border-color:#d085ad}
+@media(max-width:580px){
+  .hero-note-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .hero .resume-link{min-height:42px;font-size:11px}
+  .profile-handle b{font-size:10px}
+  .hero-index{font-size:12px}
+}

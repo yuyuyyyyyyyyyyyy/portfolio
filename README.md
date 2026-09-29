@@ -1,4 +1,4 @@
-# AI 应用 / Agent 开发工程师作品集
+# Yuyu｜AI 应用 / Agent 开发工程师作品集
 
 面向技术面试官和猎头的个人作品集，使用 Vue 3 + Vite 构建。五个项目按求职 Agent、AI Job Radar、多棱镜、牡丹亭、探索运营排序，分别展示问题、技术方案、开发卡点与当前状态。
 
@@ -13,7 +13,7 @@ npm run dev
 
 ## 内容与资源
 
-项目文案和外部链接在 `src/App.vue`；基础样式、赛博朋克主题和简历式布局分别在 `src/redesign.css`、`src/cyberpunk.css`、`src/resume-cyber.css`。图片与演示视频放在 `public/media/`。修改项目事实前，应核对实际代码、演示或已发布页面。
+项目文案和外部链接在 `src/App.vue`；基础样式、赛博朋克主题和简历式布局分别在 `src/redesign.css`、`src/cyberpunk.css`、`src/resume-cyber.css`。图片与演示视频放在 `public/media/`。公开简历的可编辑源文件是 `resume/Yuyu_Agent_公开简历.html`，下载 PDF 在 `public/`。修改项目事实前，应核对实际代码、演示或已发布页面。
 
 ## 生产构建
 

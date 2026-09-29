@@ -207,10 +207,10 @@ const process = [
 </script>
 
 <template>
-  <div v-if="introVisible" class="boot-intro" :class="{ 'is-ready': introReady }" role="dialog" aria-modal="true" aria-label="杜雨菲的赛博朋克开场">
+  <div v-if="introVisible" class="boot-intro" :class="{ 'is-ready': introReady }" role="dialog" aria-modal="true" aria-label="Yuyu 的赛博朋克开场">
     <div class="boot-intro__frame">
       <div class="boot-intro__portrait"><img :src="asset('media/blue-digital-silhouette-v2.webp')" alt="蓝色数字点阵女性侧影插画" width="1672" height="940" fetchpriority="high" @load="startIntro" @error="closeIntro"></div>
-      <div class="boot-intro__copy"><span>SIGNAL / DU YUFEI</span><h2>杜雨菲</h2><p>AI 应用 / Agent 开发工程师</p><small>保持好奇，把想法做出来。</small></div>
+      <div class="boot-intro__copy"><span>SIGNAL / YUYU</span><h2>Yuyu</h2><p>AI 应用 / Agent 开发工程师</p><small>保持好奇，把想法做出来。</small></div>
       <div class="boot-intro__progress" aria-hidden="true"></div>
     </div>
     <button type="button" class="boot-intro__skip" @click="closeIntro(true)">跳过开场 ↗</button>
@@ -219,7 +219,7 @@ const process = [
     <canvas class="sky-grain" aria-hidden="true"></canvas>
     <a class="skip-link" href="#work">跳到项目内容</a>
     <nav class="nav shell">
-      <a class="brand" href="#top"><span>雨<span class="brand-dot">.</span></span><b>杜雨菲 <small>AI APPLICATIONS & AGENTS</small></b></a>
+      <a class="brand" href="#top"><span>雨<span class="brand-dot">.</span></span><b>Yuyu <small>AI APPLICATIONS & AGENTS</small></b></a>
       <div class="nav-links"><a href="#work">代表项目</a><a href="#process">工作方式</a><a href="#education">教育与技能</a><a class="nav-cta" href="mailto:duyufei000@126.com">联系我</a></div>
     </nav>
 
@@ -227,10 +227,10 @@ const process = [
       <section class="hero shell job-hero">
         <div class="hero-copy">
           <p class="eyebrow"><i></i>开放工作机会 <span>武汉 / 北京</span></p>
-          <p class="hero-index">你好，我是杜雨菲 / AI 应用开发</p>
+          <p class="hero-index">把复杂流程拆成 AI 可执行的步骤</p>
           <h1><span class="hero-title-line">AI 应用 /</span><br><em class="hero-title-line">Agent 开发工程师</em></h1>
           <p class="lead">保持好奇，把想法做出来。</p>
-          <div class="actions"><a class="button primary" href="#work">探索我的作品 <span>↘</span></a><a class="button" :href="asset('杜雨菲_Agent应用开发_简历.pdf')" download>下载简历 ↗</a></div>
+          <div class="actions"><a class="button primary" href="#work">探索我的作品 <span>↘</span></a><a class="resume-link" :href="asset('Yuyu_Agent_公开简历.pdf')" download>下载公开简历 ↗</a></div>
           <p class="hero-footnote">Python <span>·</span> 大模型 API <span>·</span> UI Automation <span>·</span> SQLite</p>
         </div>
         <aside class="hero-product" :class="`step-${arcadeStep}`" aria-label="项目与工作过程速览">
@@ -242,7 +242,7 @@ const process = [
           <span class="studio-caption">IDEA ↔ REALITY</span>
         </aside>
       </section>
-      <div class="discipline-strip shell"><span>从真实输入到可验证输出。</span><span>PYTHON <i>✳</i> AI APPLICATIONS <i>✳</i> AGENT WORKFLOWS</span></div>
+      <div class="discipline-strip shell"><span>2,400+ 岗位记录</span><span>AI Job Radar <i>✳</i> Edge 商店已上架</span></div>
 
       <section id="work" class="section shell work-home">
         <header class="section-head"><div><p class="kicker">01 / SELECTED WORK</p><h2>做过的项目<span class="accent">。</span></h2></div><p>从一个真实问题开始，写清我怎么做、在哪一步改了主意，以及目前做到哪里。</p></header>
@@ -258,7 +258,7 @@ const process = [
           </div>
 
           <div class="card-media mechanism-media" :id="`demo-${project.id}`">
-            <div v-if="project.id === 'agent'" class="agent-mechanism"><figure class="project-art"><img :src="asset('media/agent-concept-v2.webp')" alt="用纸片与连线表现读取、判断、核验的抽象插画" loading="lazy" decoding="async" width="1280" height="720"><figcaption>概念插画 · 非产品截图</figcaption></figure><span class="mechanism-label">LOCAL AGENT / READ → CHECK → VERIFY</span><h4>把判断与执行分开</h4><div class="agent-flow" aria-label="READ CHECK VERIFY 流程"><span>READ<br>读取岗位</span><i>→</i><span>CHECK<br>规则与模型判断</span><i>→</i><span>VERIFY<br>发送核验</span></div><p>每一步都保留可检查的输入、判断和输出；发送结果不明确时停止。</p></div>
+            <div v-if="project.id === 'agent'" class="agent-mechanism"><figure class="project-art agent-real-screen"><a :href="asset('media/agent-real-job-screen.png')" target="_blank" rel="noreferrer" aria-label="放大查看 Agent 读取的真实招聘页面截图"><img :src="asset('media/agent-real-job-screen.png')" alt="真实运行环境中的招聘岗位页面，左侧为岗位列表，右侧为完整职位描述" loading="lazy" decoding="async" width="1240" height="700"></a><figcaption>真实运行输入界面 · 点击放大</figcaption></figure><span class="mechanism-label">LOCAL AGENT / READ → CHECK → VERIFY</span><h4>把判断与执行分开</h4><div class="agent-flow" aria-label="READ CHECK VERIFY 流程"><span>READ<br>读取岗位</span><i>→</i><span>CHECK<br>规则与模型判断</span><i>→</i><span>VERIFY<br>发送核验</span></div><p>每一步都保留可检查的输入、判断和输出；发送结果不明确时停止。</p></div>
             <template v-else-if="project.id === 'plugin'"><div class="video-head"><div><span>真实产品界面</span><b>从完整 JD 生成行动判断</b></div><small>{{ project.status }}</small></div><div v-if="!videoEnabled[project.id]" class="video-preview"><img :src="asset(project.poster)" alt="AI Job Radar 演示视频封面" loading="lazy" decoding="async" width="854" height="480"><button type="button" @click="playVideo(project.id)" aria-label="播放 AI Job Radar 演示视频"><span aria-hidden="true">▶</span>播放演示</button></div><video v-else :src="asset(project.video)" :poster="asset(project.poster)" controls preload="none" playsinline :aria-label="`${project.title} 演示视频`"></video></template>
             <div v-else-if="project.id === 'prism'" class="prism-mechanism"><figure class="project-art"><img :src="asset('media/prism-concept-v2.webp')" alt="同一个球体穿过多块棱镜，产生不同观察路径的抽象插画" loading="lazy" decoding="async" width="1280" height="720"><figcaption>概念插画 · 非产品截图</figcaption></figure><span class="mechanism-label">输入事件</span><h4>“他没有回复我。”</h4><div class="mechanism-tabs"><button :class="{active: prismView === 'fact'}" @click="prismView = 'fact'">事实</button><button :class="{active: prismView === 'possibility'}" @click="prismView = 'possibility'">不同解释</button><button :class="{active: prismView === 'verify'}" @click="prismView = 'verify'">下一步验证</button></div><p v-if="prismView === 'fact'"><b>可以确认：</b>消息已发出，目前没有收到回复。</p><p v-else-if="prismView === 'possibility'"><b>还有可能：</b>正在忙、没有看到、不知道如何回应，或暂时不想回复。</p><p v-else><b>可以验证：</b>等待一个合理时间，再通过其他行为观察关系，而不是立即认定原因。</p></div>
             <div v-else-if="project.id === 'reading'" class="reading-mechanism"><figure class="project-art"><img :src="asset('media/reading-concept-v2.webp')" alt="书页中展开园林与牡丹，细线连接前后页的概念插画" loading="lazy" decoding="async" width="1280" height="720"><figcaption>概念插画 · 非作品截图</figcaption></figure><span class="mechanism-label">INTERACTIVE READING</span><blockquote>原来姹紫嫣红开遍。</blockquote><p>划选原文 → 找到后文回声 → 回到文本继续阅读</p></div>
@@ -286,11 +286,11 @@ const process = [
 
       <section id="process" class="section process-section"><div class="shell"><header class="section-head inverse"><div><p class="kicker">HOW I WORK</p><h2>我如何工作。</h2></div></header><div class="process-grid"><article v-for="item in process" :key="item[0]" :class="{ active: arcadeStep === Number(item[0]) }"><b>{{ item[0] }}</b><h3>{{ item[1] }}</h3><p>{{ item[2] }}</p></article></div></div></section>
 
-      <section id="education" class="shell education-compact"><div class="education-heading"><div><p class="kicker">ABOUT ME</p><h2>关于我</h2><p>杜雨菲 · AI 应用 / Agent 开发工程师</p></div><figure class="profile-photo"><img :src="asset('photo.jpg')" alt="杜雨菲本人证件照" width="320" height="400" loading="lazy" decoding="async"><figcaption>杜雨菲 / 本人照片</figcaption></figure></div><div class="education-three"><article><span>教育背景</span><h3>计算机科学与技术本科</h3><p>长江师范学院｜山东科技大学联合培养</p><p>2025 届 · 专业排名第 4 · CET-4</p></article><article><span>项目实践</span><h3>从接口到可用流程</h3><p>独立实现本地 Agent、浏览器扩展和 AI 应用；关注输入校验、状态记录、失败处理与用户操作路径。</p></article><article><span>项目中使用的技术</span><h3>AI 应用开发</h3><p>Python、TypeScript、Vue、React / Next.js、浏览器扩展、大模型 API、SQLite 与 Git。</p><p>结合实现限制调整方案，也明确尚未验证的边界。</p></article></div></section>
+      <section id="education" class="shell education-compact"><div class="education-heading"><div><p class="kicker">ABOUT ME</p><h2>关于我</h2><p>Yuyu · AI 应用 / Agent 开发工程师</p></div><a class="profile-handle" href="https://github.com/yuyuyyyyyyyyyyyy" target="_blank" rel="noreferrer"><span>GITHUB / YUYU</span><b>@yuyuyyyyyyyyyyyy ↗</b></a></div><div class="education-three"><article><span>教育背景</span><h3>计算机科学与技术本科</h3><p>长江师范学院｜山东科技大学联合培养</p><p>2025 届 · 专业排名第 4 · CET-4</p></article><article><span>项目实践</span><h3>从接口到可用流程</h3><p>独立实现本地 Agent、浏览器扩展和 AI 应用；关注输入校验、状态记录、失败处理与用户操作路径。</p></article><article><span>项目中使用的技术</span><h3>AI 应用开发</h3><p>Python、TypeScript、Vue、React / Next.js、浏览器扩展、大模型 API、SQLite 与 Git。</p><p>结合实现限制调整方案，也明确尚未验证的边界。</p></article></div></section>
 
-      <section class="contact shell"><p class="kicker">LET’S BUILD SOMETHING USEFUL</p><h2>联系我<span>↗</span></h2><p>正在寻找 AI 应用 / Agent 开发工程师岗位。</p><div><a class="button lime" href="mailto:duyufei000@126.com">duyufei000@126.com ↗</a><button class="copy-email" type="button" @click="copyEmail">复制邮箱</button><a :href="asset('杜雨菲_Agent应用开发_简历.pdf')" download>下载简历 ↓</a><a href="https://github.com/yuyuyyyyyyyyyyyy" target="_blank" rel="noreferrer">GitHub ↗</a></div><p class="copy-feedback" role="status">{{ copied }}</p></section>
+      <section class="contact shell"><p class="kicker">LET’S BUILD SOMETHING USEFUL</p><h2>联系我<span>↗</span></h2><p>正在寻找 AI 应用 / Agent 开发工程师岗位。</p><div><a class="button lime" href="mailto:duyufei000@126.com">duyufei000@126.com ↗</a><button class="copy-email" type="button" @click="copyEmail">复制邮箱</button><a :href="asset('Yuyu_Agent_公开简历.pdf')" download>下载公开简历 ↓</a><a href="https://github.com/yuyuyyyyyyyyyyyy" target="_blank" rel="noreferrer">GitHub ↗</a></div><p class="copy-feedback" role="status">{{ copied }}</p></section>
     </main>
-    <footer class="footer shell"><span>© 2026 杜雨菲 · 用作品说话</span><a href="#top">回到顶部 ↑</a><span>DESIGNED TO BE USEFUL.</span></footer>
+    <footer class="footer shell"><span>© 2026 Yuyu · 用作品说话</span><a href="#top">回到顶部 ↑</a><span>DESIGNED TO BE USEFUL.</span></footer>
   </div>
 </template>
 
