@@ -4,21 +4,85 @@
 <meta charset="utf-8">
 <title>Yuyu｜AI 应用 / Agent 开发工程师｜公开简历</title>
 <style>
-@page{size:A4;margin:13mm 15mm 12mm}
-*{box-sizing:border-box}body{margin:0;font:10pt/1.53 "Microsoft YaHei","Noto Sans CJK SC",sans-serif;color:#182339}a{color:#274f91;text-decoration:none}
-header{display:flex;justify-content:space-between;align-items:end;padding-bottom:10px;border-bottom:2px solid #172e56}h1{margin:0;font-size:24pt;line-height:1.1;letter-spacing:.02em}.role{margin:4px 0 0;color:#31558c;font-size:11pt;font-weight:700}.contact{text-align:right;font-size:8.4pt;line-height:1.6}
-.summary{display:flex;gap:12px;margin:11px 0 13px}.metric{flex:1;padding:8px 10px;background:#eef3f9;border-left:2px solid #416ca6}.metric b{display:block;font-size:13pt;color:#173a70}.metric span{color:#52647f;font-size:8pt}
-h2{font-size:10.5pt;letter-spacing:.08em;color:#264b83;margin:15px 0 6px;border-bottom:1px solid #d7e0ec;padding-bottom:3px}.lead{font-size:9.1pt;margin:0;color:#354560}.project{margin:10px 0 0;break-inside:avoid}.project h3{font-size:10pt;margin:0}.project .meta{font-size:8.1pt;color:#60718b;margin:2px 0 4px}.project ul{margin:0;padding-left:15px}.project li{margin:3px 0}.project strong{color:#1e426f}.small{font-size:8.6pt}.footer{display:flex;justify-content:space-between;gap:20px}.footer>div{flex:1}.footer p{margin:3px 0}
+@page{size:A4;margin:12mm 14mm 11mm}
+*{box-sizing:border-box}
+body{margin:0;color:#192336;font:9.7pt/1.51 "Microsoft YaHei","Noto Sans CJK SC",sans-serif}
+a{color:#204c83;text-decoration:none}
+header{display:flex;justify-content:space-between;align-items:end;border-bottom:2px solid #183d67;padding-bottom:9px}
+h1{font-size:22pt;line-height:1;margin:0;letter-spacing:.02em}
+.role{font-size:10.4pt;font-weight:700;color:#244e82;margin:5px 0 0}
+.contact{text-align:right;font-size:8pt;line-height:1.65}
+.position{margin:11px 0 9px;font-size:9.5pt;color:#33445d}
+.position strong{color:#203d66}
+.proof{display:flex;gap:8px;margin:0 0 8px}
+.proof div{flex:1;background:#edf2f7;border-left:2px solid #5077a4;padding:6px 9px}
+.proof b{display:block;font-size:11.2pt;color:#173d70;line-height:1.2}
+.proof span{font-size:7.8pt;color:#56677c}
+h2{font-size:10.6pt;color:#244e82;border-bottom:1px solid #cbd7e5;padding-bottom:2px;margin:12px 0 6px}
+.project{break-inside:avoid;margin:0 0 9px}
+.project h3{font-size:10.1pt;margin:0;line-height:1.3}
+.meta{font-size:8.4pt;color:#5b6b80;margin:1px 0 4px}
+ul{margin:0;padding-left:16px}
+li{margin:2px 0}
+li strong{color:#1e466f}
+.bottom{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:1px}
+.bottom h2{margin-top:7px}
+.bottom p{margin:2px 0;font-size:8.7pt}
+.footnote{font-size:7.4pt;color:#68778b;margin:6px 0 0}
 </style>
 </head>
 <body>
-<header><div><h1>Yuyu</h1><p class="role">AI 应用 / Agent 开发工程师</p></div><div class="contact"><a href="mailto:duyufei000@126.com">duyufei000@126.com</a><br><a href="https://yuyuyyyyyyyyyyyy.github.io/portfolio/">作品集</a> · <a href="https://github.com/yuyuyyyyyyyyyyyy">GitHub</a> · <a href="https://microsoftedge.microsoft.com/addons/detail/aidmlojjjgebhogkffbebnfpjhfbpfmm">Edge 商店</a></div></header>
-<div class="summary"><div class="metric"><b>2,400+</b><span>去重岗位记录 · 本地求职 Agent</span></div><div class="metric"><b>Edge 上架</b><span>AI Job Radar 浏览器扩展</span></div><div class="metric"><b>端到端实现</b><span>输入读取、模型判断、执行核验、失败恢复</span></div></div>
-<p class="lead">计算机科学与技术本科。独立实现 Windows 桌面 Agent、浏览器扩展及在线 AI 应用；重点解决模型输出不可靠、页面状态错位和重复执行风险。</p>
-<h2>代表项目</h2>
-<section class="project"><h3>01 · Windows 桌面求职 Agent｜独立开发</h3><p class="meta">Python · 大模型 HTTP API · JSON 校验 · Windows UI Automation · SQLite</p><ul><li><strong>处理规模与职责：</strong>本地数据库保存 2,400+ 条按岗位身份去重的处理记录；把岗位读取、门槛检查、模型分级、项目证据匹配、桌面执行与结果回读拆成可检查的步骤。</li><li><strong>判断可信度：</strong>模型返回结构化 JSON，程序校验字段与硬门槛；将“明确冲突”“待补充信息”“项目证据”分开保存，匹配不足的岗位转人工判断。</li><li><strong>失败恢复：</strong>核对岗位卡片、详情与聊天对象；读取超时保留检查点，页面错位立即停机。发送后回读会话，仅在观察到对应消息时记为已发送；不确定状态不自动重试，避免重复沟通。</li></ul></section>
-<section class="project"><h3>02 · AI Job Radar｜Edge 商店已上架</h3><p class="meta">TypeScript · React · Manifest V3 · 大模型 API · 本地 OCR</p><ul><li><strong>从搬运岗位改为就地判断：</strong>第一版独立面板要求用户来回复制 JD；改成招聘网页侧边栏，读取当前完整 JD，与简历证据逐项对照，投递仍由用户决定。</li><li><strong>证据约束：</strong>扫描版 PDF 在本地 OCR，提取经历由用户确认；模型判断区分硬条件冲突、未知和偏好，并校验 JD 与简历引文。证据不足时下调建议等级，避免关键词相同就误判匹配。</li></ul></section>
-<section class="project"><h3>03 · 牡丹亭 · 惊梦｜已上线</h3><p class="meta">React · TypeScript · MCP · AI 检索</p><ul><li><strong>限制模型越界：</strong>校对原文由服务端签发 evidenceId；从 25 条人工审核的文本关系中检索后文回声，模型只做候选排序。找不到可靠证据时返回不发言状态，不编造原文。</li></ul></section>
-<div class="footer"><div><h2>教育</h2><p class="small"><strong>计算机科学与技术 · 本科</strong><br>长江师范学院｜山东科技大学联合培养<br>2025 届 · 专业排名第 4 · CET-4</p></div><div><h2>技术</h2><p class="small">Python、TypeScript、React、Vue、Next.js、SQLite、Git、浏览器扩展、Windows UI Automation；大模型 API、结构化输出、OCR 与人机协作边界。</p></div></div>
+<header>
+  <div><h1>Yuyu</h1><p class="role">AI 应用 / Agent 开发工程师</p></div>
+  <div class="contact"><a href="mailto:duyufei000@126.com">duyufei000@126.com</a><br><a href="https://yuyuyyyyyyyyyyyy.github.io/portfolio/">作品集</a> · <a href="https://github.com/yuyuyyyyyyyyyyyy">GitHub</a> · <a href="https://microsoftedge.microsoft.com/addons/detail/aidmlojjjgebhogkffbebnfpjhfbpfmm">Edge 商店作品</a></div>
+</header>
+<p class="position"><strong>定位：</strong>把模型判断接入真实操作流程，重点处理输入可信度、结构化输出、执行状态与失败恢复。计算机科学与技术本科，独立完成桌面 Agent、浏览器扩展和在线 AI 应用。</p>
+<div class="proof">
+  <div><b>2,900+ 条</b><span>本地 Agent 去重岗位记录</span></div>
+  <div><b>Edge 已上架</b><span>AI Job Radar 浏览器扩展</span></div>
+  <div><b>25 条</b><span>《牡丹亭》人工审核文本关系</span></div>
+</div>
+<h2>项目经历</h2>
+<section class="project">
+  <h3>01｜Windows 桌面求职 Agent <small>· 独立开发 / 本地运行</small></h3>
+  <p class="meta">Python · 大模型 HTTP API · JSON 校验 · Windows UI Automation · SQLite</p>
+  <ul>
+    <li><strong>问题与结果：</strong>针对逐岗读 JD、对照经历、组织沟通的重复工作，做出可运行的桌面处理链路；截至 2026.09.30，本地库留存 2,900+ 条按岗位指纹去重的处理记录。</li>
+    <li><strong>工作流设计：</strong>把读取岗位、硬门槛过滤、模型 A / B / 跳过判断、项目证据匹配、桌面执行和结果回读拆开；确定性门槛由代码判断，语义匹配交给模型，发送前再做身份核验。</li>
+    <li><strong>状态与证据：</strong>Python 校验模型返回的 JSON 字段，SQLite 保存 JD、判断依据、岗位指纹和处理状态；同岗已完成的判断可复用，信息不完整或证据不足时留给人工确认。</li>
+    <li><strong>失败恢复：</strong>发送前核对卡片、详情与聊天对象；页面错位或读取超时即停下并保留现场。发送后只有在会话中观察到对应消息才标记已发送；结果不明记为 <code>send_ambiguous</code>，不自动重发。</li>
+  </ul>
+</section>
+<section class="project">
+  <h3>02｜AI Job Radar <small>· 独立开发 / Edge 商店已上架</small></h3>
+  <p class="meta">TypeScript · React · Manifest V3 · 大模型 API · 本地 OCR</p>
+  <ul>
+    <li><strong>问题与迭代：</strong>独立岗位面板需要反复搬运 JD，改为招聘网页内的侧边助手；内容脚本读取当前页完整 JD，在原页面给出行动判断，投递仍由用户决定。</li>
+    <li><strong>核心实现：</strong>支持 PDF / TXT / Markdown 简历，扫描版 PDF 先在本地 OCR；提取经历经用户确认后再参与匹配。模型区分硬条件冲突、未知信息和偏好，并返回 JD 原文与简历证据。</li>
+    <li><strong>结果校验：</strong>检查引用是否确实出自 JD 和简历原文；证据不足时下调建议等级，避免仅凭关键词给出高匹配结论。</li>
+    <li><strong>交付状态：</strong>内容脚本、侧边栏、模型接口和本地存储已组成完整扩展，已通过 Microsoft Edge 商店审核并公开上架。</li>
+  </ul>
+</section>
+<section class="project">
+  <h3>03｜牡丹亭 · 惊梦 <small>· 已上线 / 可在线体验</small></h3>
+  <p class="meta">React · TypeScript · MCP · AI 检索</p>
+  <ul>
+    <li><strong>问题与实现：</strong>让读者从划选原文进入后文回声，同时避免模型编造戏曲文本。服务端给校对原文签发 <code>evidenceId</code>；MCP 提供原文、回声与角色回应工具，模型只在 25 条人工审核关系中排序候选。</li>
+    <li><strong>边界：</strong>服务端重新核对引用并拦截未读章节；找不到可信证据时返回不发言状态，模型异常时使用有据的本地规则降级。</li>
+  </ul>
+</section>
+<section class="project">
+  <h3>04｜多棱镜 <small>· 独立开发 / 在线可体验</small></h3>
+  <p class="meta">Next.js · TypeScript · 大模型 API · 结构化输出</p>
+  <ul>
+    <li><strong>问题与实现：</strong>用户容易把一件事归结为唯一原因；分析接口把回答拆成可确认事实、跨学科解释、适用边界和下一步可验证实验，并提供 Explore / Converge 两种模式。</li>
+    <li><strong>边界处理：</strong>针对模型把猜测写成事实、解释重复和建议空泛的问题迭代输出约束；调用或解析失败时切换到明确标注的模拟解释，避免把降级结果冒充实时推理。</li>
+  </ul>
+</section>
+<div class="bottom">
+  <div><h2>教育与经历</h2><p><strong>计算机科学与技术 · 本科</strong>｜长江师范学院<br>山东科技大学联合培养，2025 届；专业排名第 4，CET-4。</p><p><strong>前端开发实习生</strong>｜近未来（武汉）科技有限公司<br>2024.08—2024.11；参与前端页面与功能开发、界面问题定位。</p></div>
+  <div><h2>技术能力</h2><p><strong>AI / Agent：</strong>大模型 API、结构化输出与校验、证据匹配、人工确认边界、失败恢复。</p><p><strong>开发：</strong>Python、TypeScript、React、Vue、Next.js、SQLite、Git、浏览器扩展、Windows UI Automation。</p></div>
+</div>
+<p class="footnote">2,900+ 为本地数据库中按岗位指纹去重的处理记录数，不代表已发送数量或招聘结果。</p>
 </body>
 </html>

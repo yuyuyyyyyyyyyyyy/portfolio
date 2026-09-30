@@ -14,7 +14,7 @@ test('hero arcade shows four workflow steps, five projects and grounded evidence
   const hero = page.split('<section id="work"')[0]
   assert.equal((hero.match(/class="workflow-key"/g) || []).length, 4)
   for (const id of ['agent', 'plugin', 'prism', 'reading', 'ops']) assert.match(hero, new RegExp(`<a href="#${id}">`))
-  assert.match(hero, /2,400\+ 岗位记录/)
+  assert.match(hero, /2,900\+ 去重岗位记录/)
   assert.match(hero, /把复杂流程拆成 AI 可执行的步骤/)
   assert.match(page, /media\/agent-real-job-screen\.png/)
   assert.doesNotMatch(page, /media\/agent-concept-v2\.webp/)

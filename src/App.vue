@@ -242,7 +242,7 @@ const process = [
           <span class="studio-caption">IDEA ↔ REALITY</span>
         </aside>
       </section>
-      <div class="discipline-strip shell"><span>2,400+ 岗位记录</span><span>AI Job Radar <i>✳</i> Edge 商店已上架</span></div>
+      <div class="discipline-strip shell"><span>2,900+ 去重岗位记录</span><span>AI Job Radar <i>✳</i> Edge 商店已上架</span></div>
 
       <section id="work" class="section shell work-home">
         <header class="section-head"><div><p class="kicker">01 / SELECTED WORK</p><h2>做过的项目<span class="accent">。</span></h2></div><p>从一个真实问题开始，写清我怎么做、在哪一步改了主意，以及目前做到哪里。</p></header>
